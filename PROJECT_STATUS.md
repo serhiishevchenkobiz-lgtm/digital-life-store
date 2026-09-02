@@ -21,22 +21,26 @@ PHASE 0 — FOUNDATION
 - npm installed and verified via npm.cmd
 - Project directory created
 - PROJECT_CONTEXT.md created
+- PROJECT_STATUS.md created
+- DECISIONS.md created
+- TODO.md created
+- Git repository initialized
+- Git identity configured
+- GitHub remote connected
+- Brand identity established (Digital Life Press)
+- Design system tokens defined (typography, color, spacing, motion)
+- 2.5D visual language locked
 
 ## CURRENTLY WORKING ON
-Project foundation and development environment
+Phase 1 — Brand & creative direction → Phase 2 — Technical foundation (Next.js scaffold)
 
 ## NEXT ACTIONS
-1. Verify project memory files
-2. Verify Git repository
-3. Verify Git identity
-4. Verify GitHub connection
-5. Verify available AI coding tools
-6. Establish free cloud architecture
-7. Set up Supabase
-8. Set up deployment
-9. Create creative direction
-10. Build first prototype
-11. Create first book
+1. Scaffold Next.js application (App Router, TS, Tailwind)
+2. Build design-system primitives (Button, Card, Container, Eyebrow, etc.)
+3. Implement core layouts and homepage
+4. Implement books catalog + product detail page (static, mock data)
+5. Set up Supabase project scaffold and SQL schema
+6. Implement authentication (email magic link) for MVP, plan Google+TOTP for admin
 
 ## WORKING METHOD
 - Russian step-by-step guidance

@@ -83,5 +83,48 @@ Professional visual and technical quality is required even for the free MVP.
 ## Decision 024 — Scaling
 Build the smallest professional version first, then scale.
 
+## Decision 025 — Brand Name
+Public-facing brand: **Digital Life Press**.
+Editorial publishing house positioning, not a generic "store". Legal/operational entity may remain separate.
+
+## Decision 026 — Brand Personality
+Calm, thoughtful, well-read, useful. Editorial authority without being preachy. Speaks like a trusted editor, not a salesperson.
+
+## Decision 027 — Color System
+- `--paper` (background base, warm off-white)
+- `--ink` (primary text, near-black)
+- `--accent` (deep editorial red — used sparingly for emphasis)
+- `--muted` (secondary surfaces, borders)
+- Dark mode variant inverts paper/ink with proper contrast.
+
+## Decision 028 — Typography
+- Display: a transitional/modern serif (Fraunces via Google Fonts).
+- Body: a humanist sans (Inter via Google Fonts).
+- Numerals: tabular for prices, dates, counts.
+
+## Decision 029 — Layout Grid
+12-column responsive grid with generous gutters on desktop, single-column on mobile. Editorial vertical rhythm based on 8px baseline.
+
+## Decision 030 — Motion
+Restrained: short ease-out transitions (150–300ms). No autoplay. `prefers-reduced-motion` respected everywhere.
+
+## Decision 031 — 2.5D Direction
+Subtle layered objects with soft shadows and gentle parallax on hero only. No 3D WebGL. Implemented with CSS transforms and a few well-crafted SVG/CSS illustrations.
+
+## Decision 032 — Repository Layout
+Monorepo style for future extensibility, but only one app initially:
+- `apps/web` — Next.js storefront + admin
+- `packages/design-tokens` — exported design tokens (Tailwind preset)
+- `content/` — book manuscripts, audio scripts, articles (markdown)
+- `supabase/` — SQL migrations + seed
+- `docs/` — memory files already at root
+
+## Decision 033 — Framework Version
+Next.js 14 (App Router), React 18, TypeScript 5, Tailwind 3.4.
+
+## Decision 034 — Auth MVP
+Phase 1 storefront uses Supabase Auth email magic link. Google OAuth + TOTP MFA is the target for admin/owner role; deferred to Phase 2 admin build so the public site can launch first.
+
 ## Change Log
 2026-09-02 — Initial decision record created.
+2026-09-02 — Brand name, design tokens, repo layout, framework versions locked.

@@ -37,6 +37,9 @@ dist/
 build/
 coverage/
 
+# TypeScript incremental build info
+*.tsbuildinfo
+
 # Temporary files
 *.tmp
 *.temp

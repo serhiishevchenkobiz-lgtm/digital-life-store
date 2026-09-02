@@ -11,12 +11,24 @@
 - [x] Create PROJECT_CONTEXT.md
 - [x] Create PROJECT_STATUS.md
 - [x] Create DECISIONS.md
-- [ ] Create TODO.md
-- [ ] Initialize Git repository
-- [ ] Configure Git safely
-- [ ] Connect GitHub
-- [ ] Verify AI coding environment
-- [ ] Verify available connected cloud tools
+- [x] Create TODO.md
+- [x] Initialize Git repository
+- [x] Configure Git safely
+- [x] Connect GitHub
+- [x] Verify AI coding environment
+- [x] Verify available connected cloud tools
+
+## PHASE 1 — BRAND & CREATIVE DIRECTION
+- [x] Define brand positioning
+- [x] Define brand name (Digital Life Press)
+- [x] Define brand personality
+- [x] Define color system (editorial paper + ink + accent)
+- [x] Define typography system (serif display + sans body)
+- [x] Define spacing/grid system
+- [x] Define motion principles
+- [x] Define 2.5D visual language
+- [x] Define book cover system
+- [x] Define UI design tokens
 
 ## PHASE 1 — BRAND & CREATIVE DIRECTION
 - [ ] Define brand positioning
@@ -143,10 +155,10 @@
 - [ ] Iterate
 
 ## CURRENT FOCUS
-PHASE 0 — FOUNDATION
+PHASE 1 → PHASE 2 — Brand locked, scaffolding Next.js application
 
 ## CURRENT NEXT ACTION
-Initialize Git repository safely.
+Initialize Next.js 14 app (App Router, TS, Tailwind) inside `apps/web` with the Digital Life Press design tokens.
 
 ## RULE
 Only move to the next major phase after the current phase is sufficiently stable.

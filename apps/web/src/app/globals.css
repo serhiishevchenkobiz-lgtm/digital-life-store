@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --paper: #f6f2ea;
+    --paper-deep: #efe9dc;
+    --paper-bright: #fbf8f1;
+    --ink: #1a1714;
+    --ink-soft: #3a352e;
+    --ink-muted: #6b645b;
+    --accent: #b23a2f;
+    --muted-line: #d9d1c0;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-paper text-ink font-sans antialiased;
+    font-feature-settings: "ss01", "cv11";
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display text-ink;
+    font-feature-settings: "ss01";
+  }
+
+  ::selection {
+    background-color: #1a1714;
+    color: #f6f2ea;
+  }
+
+  :focus-visible {
+    outline: 2px solid #1a1714;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-ink-muted;
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 24px;
+    height: 1px;
+    background: currentColor;
+    display: inline-block;
+  }
+
+  .rule {
+    @apply h-px w-full bg-muted-line;
+  }
+
+  .prose-editorial p {
+    @apply text-ink-soft leading-relaxed;
+  }
+
+  .prose-editorial p + p {
+    @apply mt-4;
+  }
+}
+
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
