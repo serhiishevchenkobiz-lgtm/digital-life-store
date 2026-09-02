@@ -48,6 +48,10 @@ coverage/
 *.sqlite
 *.sqlite3
 
+# Local Supabase CLI state
+supabase/.branches
+supabase/.temp
+
 # Private project assets
 private/
 secrets/

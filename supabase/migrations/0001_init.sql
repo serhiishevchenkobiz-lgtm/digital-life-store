@@ -165,6 +165,25 @@ language sql stable security definer as $$
   );
 $$;
 
+-- Drop any prior version of our policies so re-runs are safe.
+drop policy if exists "profile self read"       on public.profiles;
+drop policy if exists "profile self update"     on public.profiles;
+drop policy if exists "roles staff read"        on public.user_roles;
+drop policy if exists "books public read"       on public.books;
+drop policy if exists "books staff write"       on public.books;
+drop policy if exists "book tr public read"     on public.book_translations;
+drop policy if exists "book tr staff write"     on public.book_translations;
+drop policy if exists "products public read"    on public.products;
+drop policy if exists "products staff write"    on public.products;
+drop policy if exists "orders self read"        on public.orders;
+drop policy if exists "order items self read"   on public.order_items;
+drop policy if exists "purchases self read"     on public.purchases;
+drop policy if exists "download log self insert" on public.download_log;
+drop policy if exists "articles public read"    on public.articles;
+drop policy if exists "articles staff write"    on public.articles;
+drop policy if exists "article tr public read"  on public.article_translations;
+drop policy if exists "article tr staff write"  on public.article_translations;
+
 -- Profiles: user can read+update own row.
 create policy "profile self read" on public.profiles
   for select using (auth.uid() = id);
