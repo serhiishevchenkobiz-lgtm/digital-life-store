@@ -1,37 +1,10 @@
 # Supabase project configuration.
 #
-# To finish the Supabase wiring you (the project owner) need to do this
-# ONCE on your own machine. The agent cannot do it because it requires
-# your Supabase access token — which is a secret that must never be pasted
-# into chat, the terminal history, or this file.
-#
-# Steps (see docs/SUPABASE_APPLY.md for the long version):
-#
-#   1. Install the Supabase CLI (if not already):
-#        npm i -g supabase
-#        # or: winget install Supabase.CLI
-#
-#   2. Create a free-tier project at https://supabase.com/dashboard
-#      and copy the Project Reference ID (looks like "abcdefghijklmnopqrst").
-#
-#   3. Set your access token in your LOCAL environment only
-#      (PowerShell, NOT in this chat and NOT in a file you commit):
-#        $env:SUPABASE_ACCESS_TOKEN = "<token from supabase.com/dashboard/account/tokens>"
-#
-#   4. Link the CLI to your project:
-#        supabase link --project-ref <your-project-ref>
-#
-#   5. Apply the migrations:
-#        supabase db push
-#
-#   6. Apply the seed (runs in the SQL editor — one paste, no secret):
-#        Open supabase/seed/books.sql and paste it into the SQL editor.
-#
-#   7. Verify (also in the SQL editor):
-#        select count(*) from public.books;       -- expect 6
-#        select id, public from storage.buckets;  -- expect paid-assets, false
+# The hosted project is already linked and the migrations have been applied
+# through the connected Supabase integration. No access token belongs in this
+# repository or in chat.
 
-project_id = "REPLACE_WITH_YOUR_PROJECT_REF"
+project_id = "jnaamvfecwoymzdhsnre"
 
 [api]
 enabled = true
@@ -78,7 +51,7 @@ enable_signup = true
 [auth.email]
 enable_signup = true
 double_confirm_changes = true
-enable_confirmations = false   # magic links do not need email confirmation
+enable_confirmations = false
 
 [edge_runtime]
 enabled = true
