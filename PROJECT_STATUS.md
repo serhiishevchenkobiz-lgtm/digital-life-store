@@ -26,10 +26,10 @@ PHASE 0 — FOUNDATION
 Project foundation and development environment
 
 ## NEXT ACTIONS
-1. Create remaining project memory files
-2. Initialize Git repository
-3. Configure Git identity
-4. Connect GitHub
+1. Verify project memory files
+2. Verify Git repository
+3. Verify Git identity
+4. Verify GitHub connection
 5. Verify available AI coding tools
 6. Establish free cloud architecture
 7. Set up Supabase
