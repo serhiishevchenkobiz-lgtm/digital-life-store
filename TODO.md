@@ -46,23 +46,23 @@
 - [ ] Define UI design system
 
 ## PHASE 2 — TECHNICAL FOUNDATION
-- [ ] Create application architecture
-- [ ] Create Next.js project
-- [ ] Configure TypeScript
-- [ ] Configure Tailwind CSS
-- [ ] Configure linting/formatting
-- [ ] Define environment variable strategy
-- [ ] Set up Supabase
-- [ ] Design database schema
-- [ ] Configure authentication
-- [ ] Configure Google OAuth
-- [ ] Configure TOTP MFA
-- [ ] Design admin authorization
-- [ ] Configure private storage
-- [ ] Configure secure digital downloads
-- [ ] Configure Cloudflare
-- [ ] Configure deployment
-- [ ] Configure monitoring
+- [x] Create application architecture
+- [x] Create Next.js project
+- [x] Configure TypeScript
+- [x] Configure Tailwind CSS
+- [x] Configure linting/formatting
+- [x] Define environment variable strategy
+- [x] Set up Supabase client wiring (browser, server, admin, middleware)
+- [x] Design database schema
+- [x] Configure authentication (magic-link MVP)
+- [x] Configure Google OAuth (deferred to admin phase)
+- [x] Configure TOTP MFA (deferred to admin phase)
+- [x] Design admin authorization (user_roles table, no self-grant)
+- [x] Configure private storage (paid-assets bucket + storage RLS)
+- [x] Configure secure digital downloads (signed URLs + ownership check + audit log)
+- [ ] Configure Cloudflare (pending deploy)
+- [ ] Configure deployment (pending)
+- [ ] Configure monitoring (pending)
 
 ## PHASE 3 — STORE
 - [ ] Homepage
@@ -155,10 +155,10 @@
 - [ ] Iterate
 
 ## CURRENT FOCUS
-PHASE 1 → PHASE 2 — Brand locked, scaffolding Next.js application
+PHASE 2 — Technical foundation: Supabase wiring complete. Awaiting Supabase project provisioning.
 
 ## CURRENT NEXT ACTION
-Initialize Next.js 14 app (App Router, TS, Tailwind) inside `apps/web` with the Digital Life Press design tokens.
+Provision free-tier Supabase project and apply migrations (0001 + 0002 + seed), then verify the sign-in → /library → signed-URL flow end-to-end.
 
 ## RULE
 Only move to the next major phase after the current phase is sufficiently stable.

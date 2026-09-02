@@ -32,8 +32,33 @@ Visit http://localhost:3000
 
 ## Environment
 
-Copy `apps/web/.env.example` to `apps/web/.env` and fill in Supabase values when ready.
-The site runs without them (using the local mock catalog) so you can preview the design first.
+Copy `apps/web/.env.example` to `apps/web/.env.local` and fill in Supabase values when ready.
+The site runs without them (using the local mock catalogue) so you can preview the design first.
+
+Full setup checklist (project creation, migrations, seed, staff role grant) lives in [`docs/ENVIRONMENT.md`](docs/ENVIRONMENT.md).
+
+## Supabase wiring
+
+| File | Purpose |
+|---|---|
+| `src/lib/supabase-env.ts` | URL + anon-key constants, safe to import from both client and server |
+| `src/lib/supabase-browser.ts` | Browser client (persists session in localStorage) |
+| `src/lib/supabase.ts` | Server / RSC / Route-Handler client (cookie-aware, via `@supabase/ssr`) |
+| `src/lib/supabase-admin.ts` | Service-role client — **server-only**, never bundled to the client |
+| `src/lib/supabase-middleware.ts` | Refreshes the auth cookie on every request |
+| `src/lib/database.types.ts` | Hand-authored types mirroring the SQL schema |
+| `src/middleware.ts` | Next.js middleware that wires `supabase-middleware` |
+| `src/app/auth/callback/route.ts` | Magic-link completion → `/library` |
+| `src/app/account/sign-in/page.tsx` | Email-magic-link sign-in form (client component) |
+| `src/app/account/actions.ts` | `signOut()` server action |
+| `src/app/library/actions.ts` | `getSignedDownloadUrl()` — verifies ownership, mints a 5-minute signed URL, writes to `download_log` |
+| `src/app/library/page.tsx` | Signed-in library: lists `purchases` joined with `products` and `books`, offers downloads |
+
+## Supabase SQL migrations
+
+- `supabase/migrations/0001_init.sql` — schema + RLS + auto-profile trigger
+- `supabase/migrations/0002_storage.sql` — private `paid-assets` bucket + storage RLS
+- `supabase/seed/books.sql` — catalogue seed
 
 ## Brand
 

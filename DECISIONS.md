@@ -125,6 +125,27 @@ Next.js 14 (App Router), React 18, TypeScript 5, Tailwind 3.4.
 ## Decision 034 — Auth MVP
 Phase 1 storefront uses Supabase Auth email magic link. Google OAuth + TOTP MFA is the target for admin/owner role; deferred to Phase 2 admin build so the public site can launch first.
 
+## Decision 035 — Supabase Client Strategy
+- `supabase-env.ts` exposes URL + anon key constants; safe in any bundle.
+- `supabase-browser.ts` builds a persistent-session browser client (anon key).
+- `supabase.ts` uses `@supabase/ssr` for Server Components / Route Handlers / Server Actions; reads cookies, refreshes via middleware.
+- `supabase-admin.ts` is `server-only` and holds the service-role key; it may only be imported from Server Actions, Route Handlers, or build scripts.
+- `supabase-middleware.ts` runs on every request to refresh expiring tokens.
+
+## Decision 036 — Storage & Download Flow
+Paid assets live in the private `paid-assets` Storage bucket. The Next.js app never exposes a public URL. To download:
+1. The user is authenticated (magic link) and has a row in `purchases`.
+2. A Server Action verifies the ownership via RLS-respecting client.
+3. The Server Action uses the admin client to read the private path and mint a 5-minute signed URL.
+4. Each issuance is logged to `download_log` for audit.
+
+## Decision 037 — Magic-Link Only for MVP
+Phase 1 customer auth is email magic link only. Google OAuth + TOTP MFA are reserved for the owner/admin role in a later admin build. No passwords, no phone numbers.
+
+## Decision 038 — Hand-authored Database Types
+Database types live in `apps/web/src/lib/database.types.ts`, kept in sync with the SQL schema by hand until a Supabase project exists. Once provisioned, regenerate via `supabase gen types typescript`.
+
 ## Change Log
 2026-09-02 — Initial decision record created.
 2026-09-02 — Brand name, design tokens, repo layout, framework versions locked.
+2026-09-02 — Supabase client strategy, storage/download flow, MVP auth, DB types approach locked.

@@ -30,17 +30,27 @@ PHASE 0 — FOUNDATION
 - Brand identity established (Digital Life Press)
 - Design system tokens defined (typography, color, spacing, motion)
 - 2.5D visual language locked
+- Next.js 14 + TS + Tailwind storefront scaffolded
+- 19 static/dynamic routes built, production build green
+- SEO foundations: sitemap, robots, JSON-LD, OG, hreflang, canonical
+- Supabase wiring complete: env, browser, server (cookie-aware), admin (server-only), middleware
+- SQL migrations: schema + RLS + storage bucket + storage RLS
+- Typed database types mirroring SQL schema
+- Auth flow: magic-link sign-in → /auth/callback → cookie session → /library
+- Secure download flow: server action verifies purchase ownership, mints 5-min signed URL, writes audit log
+- Documentation: README, ENVIRONMENT.md updated
 
 ## CURRENTLY WORKING ON
-Phase 1 — Brand & creative direction → Phase 2 — Technical foundation (Next.js scaffold)
+Phase 2 — Technical foundation: Supabase wiring complete. Awaiting project provisioning.
 
 ## NEXT ACTIONS
-1. Scaffold Next.js application (App Router, TS, Tailwind)
-2. Build design-system primitives (Button, Card, Container, Eyebrow, etc.)
-3. Implement core layouts and homepage
-4. Implement books catalog + product detail page (static, mock data)
-5. Set up Supabase project scaffold and SQL schema
-6. Implement authentication (email magic link) for MVP, plan Google+TOTP for admin
+1. Provision a free-tier Supabase project
+2. Apply migrations 0001 + 0002 + seed
+3. Configure Auth providers (Email magic link)
+4. Create the owner account and grant the 'owner' role
+5. Upload first paid assets to the private `paid-assets` bucket
+6. Phase 3 — checkout + payments wiring (Stripe or alternative)
+7. Phase 5 — first book manuscript content pipeline
 
 ## WORKING METHOD
 - Russian step-by-step guidance

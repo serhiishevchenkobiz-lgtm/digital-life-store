@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Container } from "@/components/container";
+import { AccountMenu } from "@/components/account-menu";
 
 const nav = [
   { href: "/books", label: "Books" },
@@ -40,12 +41,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link
-            href="/library"
-            className="hidden sm:inline-flex text-sm text-ink-soft hover:text-ink transition-colors"
-          >
-            My Library
-          </Link>
+          <AccountMenu />
           <Link
             href="/books"
             className="inline-flex items-center rounded-md bg-ink text-paper px-4 py-2 text-sm font-medium hover:bg-ink-soft transition-colors"
