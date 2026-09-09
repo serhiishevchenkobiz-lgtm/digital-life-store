@@ -4,14 +4,14 @@
 
 @layer base {
   :root {
-    --paper: #f7f5f0;
-    --paper-deep: #eae7de;
+    --paper: #f5f4f1;
+    --paper-deep: #eceae5;
     --paper-bright: #ffffff;
-    --ink: #14211f;
-    --ink-soft: #40504b;
-    --ink-muted: #71807b;
-    --accent: #e46b3c;
-    --muted-line: #cdd5ca;
+    --ink: #171717;
+    --ink-soft: #4f514f;
+    --ink-muted: #777a77;
+    --accent: #c84d2f;
+    --muted-line: #d8dad6;
   }
 
   html {
@@ -19,6 +19,7 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -33,25 +34,32 @@
   }
 
   ::selection {
-    background-color: #1a1714;
-    color: #f6f2ea;
+    background-color: #171717;
+    color: #ffffff;
   }
 
   :focus-visible {
-    outline: 2px solid #1a1714;
+    outline: 2px solid #171717;
     outline-offset: 3px;
     border-radius: 2px;
   }
 }
 
 @layer components {
-  .eyebrow {
-    @apply inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-muted;
+  .container {
+    width: min(calc(100% - 32px), 1440px);
+    margin-inline: auto;
   }
 
-  .eyebrow::before {
+  .eyebrow,
+  .store-label {
+    @apply inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.17em] text-ink-muted;
+  }
+
+  .eyebrow::before,
+  .store-label::before {
     content: "";
-    width: 24px;
+    width: 18px;
     height: 1px;
     background: currentColor;
     display: inline-block;
@@ -59,10 +67,6 @@
 
   .eyebrow-light {
     @apply text-paper/70;
-  }
-
-  .eyebrow-light::before {
-    background: currentColor;
   }
 
   .rule {
@@ -77,18 +81,52 @@
     @apply mt-4;
   }
 
-  .book-grid {
-    @apply grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:grid-cols-5;
+  .storefront-hero {
+    background: linear-gradient(180deg, #ffffff 0%, #f5f4f1 100%);
   }
-}
 
-@layer utilities {
+  .newsletter-strip {
+    @apply border-b border-ink bg-ink text-paper;
+  }
+
+  .store-section {
+    @apply py-12 md:py-16;
+  }
+
+  .product-rail {
+    @apply mt-8 grid grid-flow-col auto-cols-[180px] gap-5 overflow-x-auto pb-4 sm:auto-cols-[210px] md:auto-cols-[235px] lg:auto-cols-[250px];
+    scrollbar-width: thin;
+    scrollbar-color: #b9bcb9 transparent;
+  }
+
+  .product-rail > * {
+    min-width: 0;
+  }
+
   .tabular {
     font-variant-numeric: tabular-nums;
   }
 
   .text-balance {
     text-wrap: balance;
+  }
+}
+
+@layer utilities {
+  .shadow-editorial {
+    box-shadow: 0 14px 36px rgba(23, 23, 23, 0.1);
+  }
+}
+
+@media (min-width: 640px) {
+  .container {
+    width: min(calc(100% - 48px), 1440px);
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    width: min(calc(100% - 64px), 1500px);
   }
 }
 
