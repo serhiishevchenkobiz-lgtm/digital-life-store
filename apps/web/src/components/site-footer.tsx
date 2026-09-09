@@ -1,38 +1,54 @@
 import Link from "next/link";
 import { Container } from "@/components/container";
 
-const columns = [
-  { title: "Discover", links: [{ href: "/books", label: "All books" }, { href: "/categories", label: "Browse topics" }, { href: "/audio", label: "Audiobooks" }] },
-  { title: "Read with us", links: [{ href: "/free-library", label: "Free library" }, { href: "/about", label: "About the press" }, { href: "/library", label: "My library" }] },
-  { title: "Good to know", links: [{ href: "/account/sign-in", label: "Sign in" }, { href: "/books", label: "Formats & delivery" }, { href: "/about", label: "Editorial standards" }] },
+const serviceBlocks = [
+  { href: "/about", title: "About the Press", text: "Who we are, how we publish, and what belongs on our shelves." },
+  { href: "/books", title: "Book formats", text: "Compare ebook, audio and bundle options before you buy." },
+  { href: "/library", title: "My library", text: "Return to your purchases and keep your reading together." },
+  { href: "/help", title: "Help", text: "Answers about accounts, downloads, reading and orders." },
+  { href: "/free-library", title: "Free reading", text: "Start with free excerpts, samples and practical downloads." },
+  { href: "/contact", title: "Contact", text: "Get in touch with the Digital Life Press team." },
+];
+
+const legal = [
+  { href: "/privacy", label: "Privacy" },
+  { href: "/accessibility", label: "Accessibility" },
+  { href: "/terms", label: "Terms" },
+  { href: "/licenses", label: "Licenses" },
+  { href: "/authors", label: "Authors" },
 ];
 
 export function SiteFooter() {
   return (
-    <footer className="mt-20 bg-night text-paper sm:mt-28">
-      <Container className="py-14 md:py-20">
-        <div className="grid gap-12 lg:grid-cols-[1.35fr_2fr] lg:gap-20">
-          <div>
-            <Link href="/" className="font-display text-3xl tracking-tight">Digital Life <em className="font-normal text-accent">Press</em></Link>
-            <p className="mt-5 max-w-sm text-sm leading-7 text-paper/70">A digital publisher for readers who want less noise, better ideas, and useful books they can keep close.</p>
-            <Link href="/free-library" className="mt-7 inline-flex border-b border-accent pb-1 text-sm font-semibold text-paper hover:text-accent">Get the free reading shelf →</Link>
-          </div>
-          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
-            {columns.map((column) => (
-              <div key={column.title}>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.17em] text-paper/45">{column.title}</p>
-                <ul className="mt-4 space-y-3">
-                  {column.links.map((link) => <li key={link.href}><Link href={link.href} className="text-sm text-paper/75 hover:text-paper">{link.label}</Link></li>)}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="mt-14 flex flex-col gap-3 border-t border-paper/15 pt-6 text-xs text-paper/45 sm:mt-20 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} Digital Life Press.</p>
-          <p>Independent publishing · Digital delivery worldwide</p>
+    <footer className="classic-footer mt-16 sm:mt-20">
+      <Container>
+        <div className="footer-service-grid">
+          {serviceBlocks.map((block) => (
+            <Link key={block.href} href={block.href} className="footer-service">
+              <span className="footer-service-icon" aria-hidden="true">✦</span>
+              <span><strong>{block.title}</strong><small>{block.text}</small></span>
+            </Link>
+          ))}
         </div>
       </Container>
+
+      <div className="footer-dark">
+        <Container className="footer-dark-inner">
+          <div>
+            <Link href="/" className="font-serif text-3xl text-white">Digital Life<span className="text-logo-green"> Press</span></Link>
+            <p className="mt-3 max-w-md text-sm leading-6 text-white/70">A digital bookstore for useful ideas, thoughtful reading and books you can keep close.</p>
+          </div>
+          <div className="footer-columns">
+            <div><h2>Discover</h2><Link href="/books">Browse books</Link><Link href="/categories">Categories</Link><Link href="/audio">Audiobooks</Link></div>
+            <div><h2>Readers</h2><Link href="/library">My library</Link><Link href="/free-library">Free library</Link><Link href="/account/sign-in">Sign in</Link></div>
+            <div><h2>More</h2><Link href="/about">About</Link><Link href="/help">Help</Link><Link href="/contact">Contact</Link></div>
+          </div>
+        </Container>
+        <Container className="footer-legal">
+          <p>© {new Date().getFullYear()} Digital Life Press · Digital delivery worldwide</p>
+          <nav aria-label="Legal and policy links">{legal.map((item) => <Link key={item.href} href={item.href}>{item.label}</Link>)}</nav>
+        </Container>
+      </div>
     </footer>
   );
 }
