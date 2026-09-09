@@ -7,12 +7,20 @@ import { Container } from "@/components/container";
 import { AccountMenu } from "@/components/account-menu";
 import { useCart } from "@/components/cart-provider";
 
-const nav = [
+const topLinks = [
   { href: "/books", label: "Browse" },
-  { href: "/categories", label: "Categories" },
-  { href: "/audio", label: "Audiobooks" },
+  { href: "/gifts", label: "Gift Certificates" },
   { href: "/free-library", label: "Free Reads" },
-  { href: "/about", label: "About" },
+  { href: "/feedback", label: "Feedback" },
+  { href: "/blog", label: "Blog" },
+];
+
+const nav = [
+  { href: "/books", label: "Featured Titles" },
+  { href: "/books", label: "Just Arrived" },
+  { href: "/categories", label: "Popular Categories" },
+  { href: "/audio", label: "Audiobooks" },
+  { href: "/about", label: "About the Press" },
 ];
 
 export function SiteHeader() {
@@ -29,60 +37,78 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="site-header relative z-40 border-b border-ink/15 bg-paper-bright">
-      <Container className="flex min-h-14 items-center justify-between gap-3 text-xs sm:min-h-12">
-        <p className="hidden text-ink-muted sm:block">Independent digital books for curious lives.</p>
-        <div className="ml-auto flex items-center gap-4">
-          <Link href="/free-library" className="font-semibold hover:text-accent">Free reading</Link>
-          <span className="hidden text-ink-muted sm:inline">EPUB · PDF · Audio</span>
-        </div>
-      </Container>
+    <header className="site-header relative z-40 border-b border-sky-line bg-white">
+      <div className="header-top border-b border-sky-line bg-white text-[12px] text-blue-deep">
+        <Container className="flex min-h-8 items-center justify-between gap-4 overflow-x-auto whitespace-nowrap">
+          <nav aria-label="Utility" className="flex items-center gap-7">
+            {topLinks.map((item) => (
+              <Link key={item.href + item.label} href={item.href} className="hover:text-sky hover:underline">
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          <div className="flex items-center gap-4">
+            <Link href="/account/sign-in" className="hover:text-sky hover:underline">Sign In</Link>
+            <Link href="/account/sign-up" className="hover:text-sky hover:underline">Create an Account</Link>
+            <Link href="/help" className="hover:text-sky hover:underline">Help</Link>
+          </div>
+        </Container>
+      </div>
 
-      <Container className="flex min-h-[78px] items-center gap-6 py-3 lg:min-h-[92px]">
-        <Link href="/" className="group flex shrink-0 items-center gap-2 font-display text-[25px] tracking-[-.03em] sm:text-[30px]" aria-label="Digital Life Press — home">
-          <span aria-hidden className="grid h-9 w-9 place-items-center rounded-sm bg-ink text-sm font-sans font-bold text-paper transition-transform group-hover:rotate-[-4deg]">DL</span>
-          <span>Digital Life <em className="font-normal text-accent">Press</em></span>
+      <Container className="flex min-h-[74px] items-center justify-between gap-6 py-2">
+        <Link href="/" className="site-logo group shrink-0 font-serif text-[38px] leading-none tracking-[-.055em] text-logo-blue" aria-label="Digital Life Press — home">
+          <span className="text-logo-green">D</span><span>igitalLife</span><span className="text-logo-green">Press</span>
         </Link>
 
-        <form onSubmit={submitSearch} className="hidden min-w-0 max-w-2xl flex-1 lg:block" role="search">
-          <label className="sr-only" htmlFor="site-search">Search by title, author, topic</label>
-          <div className="search-box flex items-center bg-paper-deep px-4">
-            <input id="site-search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by title, author or topic" className="min-w-0 flex-1 bg-transparent py-3 text-sm outline-none placeholder:text-ink-muted" />
-            <button type="submit" className="px-2 py-2 text-xs font-bold uppercase tracking-[.12em] text-ink hover:text-accent" aria-label="Search catalogue">Search</button>
-          </div>
-        </form>
+        <div className="hidden text-right md:block">
+          <p className="font-serif text-lg text-blue-deep">Digital books for curious lives</p>
+          <p className="text-[11px] text-slate">EPUB · PDF · Audio · Worldwide delivery</p>
+        </div>
 
-        <div className="ml-auto flex items-center gap-2 sm:gap-4">
+        <div className="flex items-center gap-2 md:hidden">
           <AccountMenu />
-          <Link href="/checkout" className="inline-flex min-h-10 items-center gap-2 text-sm font-semibold hover:text-accent" aria-label={`Basket, ${items.length} item${items.length === 1 ? "" : "s"}`}>
-            <span>Basket</span><span className="grid h-6 min-w-6 place-items-center rounded-full border border-ink/20 px-1 text-[10px]">{items.length}</span>
-          </Link>
-          <button type="button" className="inline-flex min-h-10 items-center gap-2 px-2 text-sm font-semibold lg:hidden" aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen((open) => !open)}>
-            <span className="sr-only">{menuOpen ? "Close" : "Open"} menu</span>
-            <span aria-hidden className="text-[11px] uppercase tracking-[.14em]">Menu</span>
-            <span aria-hidden className="grid gap-1"><span className="block h-px w-5 bg-ink" /><span className="block h-px w-5 bg-ink" /></span>
+          <Link href="/checkout" className="text-sm font-semibold text-blue-deep">Basket ({items.length})</Link>
+          <button type="button" className="px-2 py-2 text-xs font-bold uppercase" aria-expanded={menuOpen} aria-controls="mobile-navigation" onClick={() => setMenuOpen((open) => !open)}>
+            Menu
           </button>
         </div>
       </Container>
 
-      <div className="border-t border-ink/10 bg-paper-deep">
-        <Container className="hidden h-12 items-center justify-between lg:flex">
-          <nav aria-label="Primary" className="flex h-full items-center gap-8">
-            {nav.map((item) => <Link key={item.href} href={item.href} className="flex h-full items-center border-b-2 border-transparent text-sm font-semibold transition-colors hover:border-accent hover:text-accent">{item.label}</Link>)}
+      <div className="header-search border-y border-sky-line bg-sky-pale">
+        <Container className="flex items-center gap-2 py-2">
+          <span className="hidden whitespace-nowrap text-[13px] text-slate sm:inline">Search our ebook catalogue</span>
+          <form onSubmit={submitSearch} className="flex min-w-0 flex-1" role="search">
+            <label className="sr-only" htmlFor="site-search">Search by title, author, subject or ISBN</label>
+            <input id="site-search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search by title, author, subject or ISBN" className="min-w-0 flex-1 border border-sky-line bg-white px-3 py-2 text-sm text-ink outline-none placeholder:text-slate focus:border-sky" />
+            <button type="submit" className="ml-1 min-w-11 rounded-sm bg-blue-deep px-3 py-2 text-xs font-bold uppercase text-white hover:bg-sky">Go</button>
+          </form>
+        </Container>
+      </div>
+
+      <div className="header-nav border-b border-sky-line bg-sky-muted">
+        <Container className="hidden min-h-10 items-center lg:flex">
+          <nav aria-label="Primary" className="flex min-w-0 overflow-hidden">
+            {nav.map((item) => (
+              <Link key={item.href + item.label} href={item.href} className="border-r border-sky-line px-5 py-2 text-[13px] text-blue-deep first:border-l hover:bg-white hover:text-sky">
+                {item.label}
+              </Link>
+            ))}
           </nav>
-          <p className="text-xs text-ink-muted"><span className="font-bold text-accent">10% saving</span> on any three eligible books</p>
+          <div className="ml-auto pl-4 text-[12px] text-slate">
+            <Link href="/checkout" className="font-semibold text-blue-deep hover:text-sky">Basket ({items.length})</Link>
+          </div>
         </Container>
       </div>
 
       {menuOpen && (
-        <div id="mobile-navigation" className="absolute inset-x-0 border-b border-ink/10 bg-paper-bright shadow-editorial lg:hidden">
-          <Container className="py-6">
-            <form onSubmit={submitSearch} className="mb-6" role="search">
-              <label className="sr-only" htmlFor="mobile-site-search">Search books and topics</label>
-              <div className="search-box flex bg-paper-deep px-3"><input id="mobile-site-search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search the catalogue" className="min-w-0 flex-1 bg-transparent px-1 py-3 text-sm outline-none" /><button type="submit" className="px-3 text-xs font-bold uppercase tracking-wide">Go</button></div>
+        <div id="mobile-navigation" className="absolute inset-x-0 border-b border-sky-line bg-white shadow-lg lg:hidden">
+          <Container className="py-4">
+            <form onSubmit={submitSearch} className="mb-4 flex" role="search">
+              <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search the catalogue" className="min-w-0 flex-1 border border-sky-line px-3 py-2 text-sm outline-none" aria-label="Search the catalogue" />
+              <button type="submit" className="bg-blue-deep px-4 text-xs font-bold uppercase text-white">Go</button>
             </form>
-            <nav aria-label="Mobile primary" className="grid divide-y divide-muted-line border-y border-muted-line">
-              {nav.map((item) => <Link key={item.href} href={item.href} onClick={() => setMenuOpen(false)} className="py-4 font-display text-2xl hover:text-accent">{item.label}</Link>)}
+            <nav aria-label="Mobile primary" className="grid border-y border-sky-line">
+              {nav.map((item) => <Link key={item.href + item.label} href={item.href} onClick={() => setMenuOpen(false)} className="border-b border-sky-line py-3 text-sm text-blue-deep last:border-b-0 hover:text-sky">{item.label}</Link>)}
             </nav>
           </Container>
         </div>
