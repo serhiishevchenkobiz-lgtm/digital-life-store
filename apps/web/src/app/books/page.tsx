@@ -3,11 +3,12 @@ import Link from "next/link";
 import { BookCard } from "@/components/book-card";
 import { Button } from "@/components/button";
 import { Container } from "@/components/container";
+import { StoreSidebar } from "@/components/store-sidebar";
 import { books, getCategories } from "@/lib/catalog";
 
 export const metadata: Metadata = {
-  title: "Books",
-  description: "Explore original eBooks, audio editions, and useful reading for a considered everyday life.",
+  title: "Browse Books",
+  description: "Browse Digital Life Press books by category, format, and topic.",
 };
 
 export default function BooksPage({ searchParams }: { searchParams: { q?: string } }) {
@@ -19,34 +20,114 @@ export default function BooksPage({ searchParams }: { searchParams: { q?: string
     : books;
 
   return (
-    <>
-      <section className="border-b border-muted-line bg-night text-paper">
-        <Container className="py-14 md:py-20">
-          <p className="eyebrow eyebrow-light">The catalogue</p>
-          <div className="mt-4 flex flex-wrap items-end justify-between gap-6">
-            <div><h1 className="max-w-3xl font-display text-display-xl">Books for a life with more attention in it.</h1><p className="mt-5 max-w-2xl text-base leading-7 text-paper/75">Short, beautifully made books for work, home, mind, and the routines that hold it all together.</p></div>
-            <p className="text-sm text-paper/60">EPUB, PDF, audio & bundles</p>
+    <div className="store-shell">
+      <StoreSidebar />
+      <main className="store-main">
+        <section className="page-banner">
+          <Container>
+            <h1>Browse eBooks</h1>
+          </Container>
+        </section>
+
+        <Container className="books-page-inner">
+          <div className="results-toolbar">
+            <div>
+              <p className="results-count">1–{matchingBooks.length} of {matchingBooks.length} results</p>
+              <nav className="pagination" aria-label="Pagination">
+                <span className="current">1</span>
+                <span aria-hidden>2</span>
+                <span aria-hidden>3</span>
+                <span aria-hidden>4</span>
+                <span>Next »</span>
+              </nav>
+            </div>
+            <label className="sort-control">
+              <span className="sr-only">Sort results</span>
+              <select defaultValue="popular">
+                <option value="popular">Sort by Popularity</option>
+                <option value="newest">Newest</option>
+                <option value="price">Price</option>
+              </select>
+            </label>
+          </div>
+
+          <div className="books-results-layout">
+            <section aria-label="Book results">
+              {matchingBooks.length > 0 ? (
+                <div className="result-list">
+                  {matchingBooks.map((book) => <ResultRow key={book.slug} book={book} />)}
+                </div>
+              ) : (
+                <section className="empty-results">
+                  <h2>No matching books</h2>
+                  <p>Try a broader title, author, or category.</p>
+                  <Button href="/books" variant="outline">Browse all books</Button>
+                </section>
+              )}
+            </section>
+
+            <aside className="filter-panel" aria-label="Filter results">
+              <h2>Filter Results</h2>
+              <input aria-label="Search within these results" placeholder="Search within these results" />
+
+              <div className="filter-group">
+                <h3>Date added</h3>
+                <label><input type="radio" name="date" defaultChecked /> All time</label>
+                <label><input type="radio" name="date" /> Last 30 days</label>
+                <label><input type="radio" name="date" /> Last 90 days</label>
+              </div>
+
+              <div className="filter-group">
+                <h3>Category</h3>
+                <select defaultValue="all" aria-label="Category">
+                  <option value="all">All</option>
+                  {categories.map((category) => <option key={category.slug} value={category.slug}>{category.name}</option>)}
+                </select>
+              </div>
+
+              <div className="filter-group">
+                <h3>Book format</h3>
+                <label><input type="radio" name="format" defaultChecked /> All</label>
+                <label><input type="radio" name="format" /> PDF</label>
+                <label><input type="radio" name="format" /> EPUB</label>
+                <label><input type="radio" name="format" /> Audio</label>
+              </div>
+
+              <div className="filter-group">
+                <h3>Language</h3>
+                <select defaultValue="en">
+                  <option value="en">English</option>
+                </select>
+              </div>
+
+              <button type="button" className="secondary-action">Apply Filters</button>
+              <p className="advanced-link">Not quite what you were looking for? <Link href="/books">Browse all categories.</Link></p>
+            </aside>
           </div>
         </Container>
-      </section>
+      </main>
+    </div>
+  );
+}
 
-      <Container className="py-10 md:py-14">
-        <nav aria-label="Book categories" className="flex flex-wrap gap-2 border-b border-muted-line pb-7">
-          <Link href="/books" className={`border px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] transition-colors ${!query ? "border-ink bg-ink text-paper" : "border-muted-line hover:border-ink"}`}>All titles</Link>
-          {categories.map((category) => <Link key={category.slug} href={`/categories/${category.slug}`} className="border border-muted-line px-3 py-2 text-xs font-semibold uppercase tracking-[0.12em] hover:border-ink hover:text-accent">{category.name}</Link>)}
-        </nav>
-
-        <div className="mt-8 flex flex-wrap items-baseline justify-between gap-3">
-          <div><p className="eyebrow">{query ? "Search results" : "All titles"}</p><h2 className="mt-2 font-display text-3xl">{query ? `Results for “${query}”` : "The complete shelf"}</h2></div>
-          <p className="text-sm text-ink-muted">{matchingBooks.length} title{matchingBooks.length === 1 ? "" : "s"}</p>
+function ResultRow({ book }: { book: (typeof books)[number] }) {
+  const formats = book.formats.map((format) => format === "ebook" ? "EPUB" : format === "audio" ? "Audio" : "Bundle").join(" · ");
+  return (
+    <article className="result-row">
+      <Link href={`/books/${book.slug}`} className="result-cover" aria-label={`${book.title} — details`}>
+        <img src={`/covers/${book.slug}.svg`} alt="" onError={(event) => { event.currentTarget.style.display = "none"; }} />
+        <div className="result-cover-fallback"><span>{book.title}</span></div>
+      </Link>
+      <div className="result-copy">
+        <h2><Link href={`/books/${book.slug}`}>{book.title}</Link></h2>
+        <p className="result-subtitle">{book.subtitle}</p>
+        <p className="result-meta">{book.author} · {book.pages} pages · {formats}</p>
+        <p className="result-description">{book.shortDescription}</p>
+        <div className="result-actions">
+          <Button href={`/books/${book.slug}`}>Add to Cart</Button>
+          <Link href={`/books/${book.slug}#details`} className="wishlist-action">View details</Link>
         </div>
-
-        {matchingBooks.length > 0 ? <div className="book-grid mt-9 md:mt-12">{matchingBooks.map((book) => <BookCard key={book.slug} book={book} />)}</div> : (
-          <section className="mt-10 max-w-2xl border-l-4 border-accent bg-paper-deep p-7 md:p-10" aria-labelledby="no-results">
-            <p className="eyebrow">No exact match</p><h2 id="no-results" className="mt-3 font-display text-3xl">That title is not on our shelf yet.</h2><p className="mt-3 leading-7 text-ink-soft">Try a broader topic, or explore the full catalogue instead.</p><Button href="/books" variant="outline" className="mt-6">Browse all titles</Button>
-          </section>
-        )}
-      </Container>
-    </>
+      </div>
+    </article>
   );
 }
