@@ -12,23 +12,23 @@ export function BookCard({ book }: { book: Book }) {
   );
 
   return (
-    <article className="group flex flex-col gap-5">
+    <article className="group flex min-w-0 flex-col gap-4">
       <Link href={`/books/${book.slug}`} className="block" aria-label={`${book.title} — view details`}>
-        <div className="relative overflow-hidden rounded-lg">
-          <div className="absolute inset-0 -z-10 bg-paper-deep rounded-lg" aria-hidden />
+        <div className="relative overflow-visible rounded-sm bg-paper-deep p-3 sm:p-4">
+          <div className="absolute inset-x-5 bottom-1 h-3 bg-ink/15 blur-lg" aria-hidden />
           <BookCover
             palette={book.cover.palette}
             motif={book.cover.motif}
             spineLabel={book.cover.spineLabel}
             title={book.title}
-            className="group-hover:-translate-y-1"
+            className="relative z-10 origin-bottom group-hover:-translate-y-2 group-hover:rotate-[-1deg]"
           />
         </div>
       </Link>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-1.5">
         <p className="eyebrow">{book.category}</p>
-        <h3 className="font-display text-2xl leading-tight tracking-tight text-balance">
+        <h3 className="font-display text-xl leading-tight tracking-tight text-balance sm:text-2xl">
           <Link href={`/books/${book.slug}`} className="hover:text-accent transition-colors">
             {book.title}
           </Link>
@@ -38,12 +38,12 @@ export function BookCard({ book }: { book: Book }) {
         </p>
       </div>
 
-      <div className="mt-auto flex items-center justify-between">
+      <div className="mt-auto flex items-center justify-between border-t border-muted-line pt-3">
         <p className="tabular text-sm text-ink">
           From <span className="font-medium">{formatPrice(lowestPriceCents)}</span>
         </p>
-        <Button href={`/books/${book.slug}`} variant="outline" className="px-4 py-2">
-          View
+        <Button href={`/books/${book.slug}`} variant="ghost" className="px-2 py-2">
+          Details →
         </Button>
       </div>
     </article>

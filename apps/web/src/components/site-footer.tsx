@@ -2,80 +2,35 @@ import Link from "next/link";
 import { Container } from "@/components/container";
 
 const columns = [
-  {
-    title: "Read",
-    links: [
-      { href: "/books", label: "All books" },
-      { href: "/categories", label: "Categories" },
-      { href: "/free-library", label: "Free Library" },
-    ],
-  },
-  {
-    title: "Listen",
-    links: [
-      { href: "/audio", label: "Audio editions" },
-      { href: "/audio#samples", label: "Audio samples" },
-    ],
-  },
-  {
-    title: "Press",
-    links: [
-      { href: "/about", label: "About" },
-      { href: "/journal", label: "Journal" },
-      { href: "/contact", label: "Contact" },
-    ],
-  },
-  {
-    title: "Account",
-    links: [
-      { href: "/library", label: "My Library" },
-      { href: "/account", label: "Account" },
-      { href: "/legal/privacy", label: "Privacy" },
-      { href: "/legal/terms", label: "Terms" },
-    ],
-  },
+  { title: "Discover", links: [{ href: "/books", label: "All books" }, { href: "/categories", label: "Browse topics" }, { href: "/audio", label: "Audiobooks" }] },
+  { title: "Read with us", links: [{ href: "/free-library", label: "Free library" }, { href: "/about", label: "About the press" }, { href: "/library", label: "My library" }] },
+  { title: "Good to know", links: [{ href: "/account/sign-in", label: "Sign in" }, { href: "/books", label: "Formats & delivery" }, { href: "/about", label: "Editorial standards" }] },
 ];
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 border-t border-muted-line bg-paper-deep">
+    <footer className="mt-20 bg-night text-paper sm:mt-28">
       <Container className="py-14 md:py-20">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-10">
-          <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="font-display text-xl tracking-tight">
-              Digital Life <span className="text-accent">Press</span>
-            </Link>
-            <p className="mt-3 text-sm text-ink-muted max-w-xs leading-relaxed">
-              A small editorial press for digital books and audio that respect
-              your time and attention.
-            </p>
+        <div className="grid gap-12 lg:grid-cols-[1.35fr_2fr] lg:gap-20">
+          <div>
+            <Link href="/" className="font-display text-3xl tracking-tight">Digital Life <em className="font-normal text-accent">Press</em></Link>
+            <p className="mt-5 max-w-sm text-sm leading-7 text-paper/70">A digital publisher for readers who want less noise, better ideas, and useful books they can keep close.</p>
+            <Link href="/free-library" className="mt-7 inline-flex border-b border-accent pb-1 text-sm font-semibold text-paper hover:text-accent">Get the free reading shelf →</Link>
           </div>
-          {columns.map((col) => (
-            <div key={col.title}>
-              <p className="eyebrow">{col.title}</p>
-              <ul className="mt-4 space-y-2">
-                {col.links.map((l) => (
-                  <li key={l.href}>
-                    <Link
-                      href={l.href}
-                      className="text-sm text-ink-soft hover:text-ink transition-colors"
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3">
+            {columns.map((column) => (
+              <div key={column.title}>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.17em] text-paper/45">{column.title}</p>
+                <ul className="mt-4 space-y-3">
+                  {column.links.map((link) => <li key={link.href}><Link href={link.href} className="text-sm text-paper/75 hover:text-paper">{link.label}</Link></li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
         </div>
-
-        <div className="rule mt-12" />
-
-        <div className="mt-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs text-ink-muted">
-          <p>© {new Date().getFullYear()} Digital Life Press. All rights reserved.</p>
-          <p className="tabular">
-            Hand-edited. Built quietly. Designed for the long read.
-          </p>
+        <div className="mt-14 flex flex-col gap-3 border-t border-paper/15 pt-6 text-xs text-paper/45 sm:mt-20 sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Digital Life Press.</p>
+          <p>Independent publishing · Digital delivery worldwide</p>
         </div>
       </Container>
     </footer>

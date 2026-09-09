@@ -27,23 +27,32 @@ const config: Config = {
     extend: {
       colors: {
         paper: {
-          DEFAULT: "#F6F2EA",
-          deep: "#EFE9DC",
-          bright: "#FBF8F1",
+          DEFAULT: "#F7F5F0",
+          deep: "#EAE7DE",
+          bright: "#FFFFFF",
         },
         ink: {
-          DEFAULT: "#1A1714",
-          soft: "#3A352E",
-          muted: "#6B645B",
+          DEFAULT: "#14211F",
+          soft: "#40504B",
+          muted: "#71807B",
         },
         accent: {
-          DEFAULT: "#B23A2F",
-          deep: "#8E2A22",
-          soft: "#D26B61",
+          DEFAULT: "#E46B3C",
+          deep: "#B94E26",
+          soft: "#F2A27E",
         },
         muted: {
-          DEFAULT: "#E5DED1",
-          line: "#D9D1C0",
+          DEFAULT: "#DFE3D8",
+          line: "#CDD5CA",
+        },
+        night: {
+          DEFAULT: "#102420",
+          soft: "#1C3730",
+          light: "#DDE7DF",
+        },
+        leaf: {
+          DEFAULT: "#6B895E",
+          pale: "#D8E1D1",
         },
       },
       fontFamily: {
@@ -63,8 +72,8 @@ const config: Config = {
         xl: "20px",
       },
       boxShadow: {
-        editorial: "0 1px 0 rgba(26,23,20,0.04), 0 18px 40px -24px rgba(26,23,20,0.18)",
-        soft: "0 8px 24px -12px rgba(26,23,20,0.12)",
+        editorial: "0 1px 0 rgba(16,36,32,0.08), 0 22px 46px -28px rgba(16,36,32,0.32)",
+        soft: "0 10px 26px -16px rgba(16,36,32,0.28)",
       },
       transitionTimingFunction: {
         editorial: "cubic-bezier(0.2, 0.7, 0.2, 1)",

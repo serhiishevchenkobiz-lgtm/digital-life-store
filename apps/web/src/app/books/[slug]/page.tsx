@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Container } from "@/components/container";
 import { Button } from "@/components/button";
 import { BookCover } from "@/components/book-cover";
+import { AddToCartButton } from "@/components/add-to-cart-button";
 import { books, getBook } from "@/lib/catalog";
 import { formatPrice } from "@/lib/utils";
 
@@ -172,7 +173,7 @@ export default function BookDetailPage({ params }: Params) {
               24 hours and can be regenerated from your library.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Button href="/checkout">Add to cart</Button>
+              <AddToCartButton book={book} format={hasBundle ? "bundle" : "ebook"} priceCents={hasBundle ? book.bundlePriceCents! : book.priceCents} />
               <Button href="#sample" variant="outline">
                 Read a sample
               </Button>

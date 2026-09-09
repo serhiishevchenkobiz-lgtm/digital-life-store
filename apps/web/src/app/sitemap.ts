@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { books } from "@/lib/catalog";
+import { books, getCategories } from "@/lib/catalog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://digitallifepress.com";
@@ -27,5 +27,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  return [...staticUrls, ...bookUrls];
+  const categoryUrls: MetadataRoute.Sitemap = getCategories().map((category) => ({
+    url: `${base}/categories/${category.slug}`,
+    lastModified,
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
+
+  return [...staticUrls, ...categoryUrls, ...bookUrls];
 }

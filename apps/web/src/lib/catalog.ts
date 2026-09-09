@@ -189,3 +189,37 @@ export const books: Book[] = [
 export function getBook(slug: string): Book | undefined {
   return books.find((b) => b.slug === slug);
 }
+
+export interface CatalogCategory {
+  name: string;
+  slug: string;
+  books: Book[];
+}
+
+export function categorySlug(category: string): string {
+  return category
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export function getCategories(): CatalogCategory[] {
+  const categories = new Map<string, Book[]>();
+
+  for (const book of books) {
+    const categoryBooks = categories.get(book.category) ?? [];
+    categoryBooks.push(book);
+    categories.set(book.category, categoryBooks);
+  }
+
+  return Array.from(categories, ([name, categoryBooks]) => ({
+    name,
+    slug: categorySlug(name),
+    books: categoryBooks,
+  }));
+}
+
+export function getCategory(slug: string): CatalogCategory | undefined {
+  return getCategories().find((category) => category.slug === slug);
+}

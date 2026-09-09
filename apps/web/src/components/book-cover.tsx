@@ -3,13 +3,13 @@ import { cn } from "@/lib/utils";
 type Palette = "ember" | "moss" | "ink" | "sand" | "inkwell" | "rose";
 type Motif = "compass" | "lamp" | "wave" | "leaf" | "arch" | "sun";
 
-const palettes: Record<Palette, { base: string; ink: string; accent: string; glow: string }> = {
-  ember: { base: "#B23A2F", ink: "#F6F2EA", accent: "#F2C7A5", glow: "rgba(242,199,165,0.35)" },
-  moss: { base: "#3F5B3A", ink: "#F6F2EA", accent: "#C7D6B6", glow: "rgba(199,214,182,0.35)" },
-  ink: { base: "#1A1714", ink: "#F6F2EA", accent: "#B23A2F", glow: "rgba(178,58,47,0.35)" },
-  sand: { base: "#D9C9A3", ink: "#1A1714", accent: "#8E2A22", glow: "rgba(26,23,20,0.18)" },
-  inkwell: { base: "#2B3A55", ink: "#F6F2EA", accent: "#E2C58F", glow: "rgba(226,197,143,0.35)" },
-  rose: { base: "#A85A6B", ink: "#F6F2EA", accent: "#F0D7C6", glow: "rgba(240,215,198,0.35)" },
+const palettes: Record<Palette, { base: string; ink: string; accent: string }> = {
+  ember: { base: "#D95F34", ink: "#FFF9F2", accent: "#FFD4AB" },
+  moss: { base: "#38594A", ink: "#F7F6EE", accent: "#C4D5A6" },
+  ink: { base: "#14211F", ink: "#FBF9F2", accent: "#E46B3C" },
+  sand: { base: "#E6D19D", ink: "#1D3932", accent: "#C36139" },
+  inkwell: { base: "#244F68", ink: "#F6FAF6", accent: "#E5C65E" },
+  rose: { base: "#8B4557", ink: "#FFF7F2", accent: "#FFBDA9" },
 };
 
 function MotifSVG({ motif, color }: { motif: Motif; color: string }) {
@@ -90,6 +90,12 @@ export function BookCover({
   ariaLabel?: string;
 }) {
   const p = palettes[palette];
+  const titleLines = title.split(" ").reduce<string[]>((lines, word) => {
+    const last = lines.at(-1) ?? "";
+    if (`${last} ${word}`.trim().length > 15) lines.push(word);
+    else lines[lines.length - 1] = `${last} ${word}`.trim();
+    return lines;
+  }, [""]);
 
   return (
     <svg
@@ -101,43 +107,23 @@ export function BookCover({
         className,
       )}
     >
-      <defs>
-        <linearGradient id={`grad-${palette}-${motif}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={p.base} />
-          <stop offset="100%" stopColor={p.base} stopOpacity="0.92" />
-        </linearGradient>
-        <radialGradient id={`glow-${palette}-${motif}`} cx="50%" cy="42%" r="55%">
-          <stop offset="0%" stopColor={p.glow} />
-          <stop offset="100%" stopColor="transparent" />
-        </radialGradient>
-      </defs>
-      <rect width="200" height="280" rx="6" fill={`url(#grad-${palette}-${motif})`} />
-      <rect width="200" height="280" rx="6" fill={`url(#glow-${palette}-${motif})`} />
-      <rect x="0" y="0" width="6" height="280" fill="rgba(0,0,0,0.25)" />
-      <g transform="translate(0 0)">
-        <MotifSVG motif={motif} color={p.ink} />
-      </g>
-      <text
-        x="100"
-        y="42"
-        textAnchor="middle"
-        fontFamily="Fraunces, serif"
-        fontSize="11"
-        letterSpacing="3"
-        fill={p.ink}
-        opacity="0.7"
-      >
+      <rect width="200" height="280" rx="4" fill={p.base} />
+      <rect x="12" y="12" width="176" height="256" rx="2" fill="none" stroke={p.ink} strokeOpacity="0.35" />
+      <rect x="0" y="0" width="7" height="280" fill="rgba(0,0,0,0.2)" />
+      <text x="22" y="32" fontFamily="Inter, sans-serif" fontSize="7" letterSpacing="1.7" fill={p.ink} opacity="0.82">
+        DIGITAL LIFE PRESS
+      </text>
+      <text x="178" y="32" textAnchor="end" fontFamily="Inter, sans-serif" fontSize="7" letterSpacing="1.4" fill={p.ink} opacity="0.72">
         {spineLabel}
       </text>
-      <text
-        x="16"
-        y="264"
-        fontFamily="Fraunces, serif"
-        fontSize="13"
-        fill={p.ink}
-        opacity="0.85"
-      >
-        Digital Life Press
+      <g transform="translate(0 -2) scale(1.05)">
+        <MotifSVG motif={motif} color={p.ink} />
+      </g>
+      <rect x="16" y="196" width="168" height="52" fill={p.base} fillOpacity="0.92" />
+      <text x="22" y="216" fontFamily="Fraunces, serif" fontSize="16" fill={p.ink}>
+        {titleLines.slice(0, 2).map((line, index) => (
+          <tspan key={line} x="22" dy={index === 0 ? 0 : 18}>{line}</tspan>
+        ))}
       </text>
     </svg>
   );

@@ -1,209 +1,120 @@
 import Link from "next/link";
-import { Container } from "@/components/container";
-import { Button } from "@/components/button";
-import { BookCover } from "@/components/book-cover";
 import { BookCard } from "@/components/book-card";
-import { books } from "@/lib/catalog";
+import { BookCover } from "@/components/book-cover";
+import { Button } from "@/components/button";
+import { Container } from "@/components/container";
+import { books, getCategories } from "@/lib/catalog";
+
+const featured = books.slice(0, 4);
+const bestsellers = [books[0], books[3], books[1], books[4]];
 
 export default function HomePage() {
-  const featured = books.slice(0, 3);
-  const editorial = books[0];
+  const categories = getCategories();
 
   return (
     <>
-      <section className="relative overflow-hidden">
-        <Container className="pt-14 md:pt-24 pb-16 md:pb-28 grid lg:grid-cols-12 gap-10 lg:gap-16 items-end">
-          <div className="lg:col-span-7">
-            <p className="eyebrow">Volume 01 · Autumn 2026</p>
-            <h1 className="mt-6 font-display text-display-2xl text-balance">
-              Premium digital publishing
-              <span className="text-accent"> for a calmer, more capable life.</span>
+      <section className="bg-night text-paper">
+        <Container className="grid min-h-[620px] items-center gap-12 py-14 md:min-h-[650px] md:py-20 lg:grid-cols-[1.05fr_.95fr] lg:gap-16 xl:min-h-[700px]">
+          <div className="relative z-10 max-w-2xl">
+            <p className="eyebrow eyebrow-light">Digital books, thoughtfully published</p>
+            <h1 className="mt-6 font-display text-[clamp(3.4rem,7vw,7rem)] leading-[0.91] tracking-[-0.045em]">
+              Find your next<br /><em className="font-normal text-[#D8E1D1]">good idea.</em>
             </h1>
-            <p className="mt-6 max-w-xl text-lg text-ink-soft leading-relaxed">
-              Digital Life Press is a small editorial house for eBooks and audio
-              that respect your time, your attention and your taste. No noise.
-              No motivational shouting. Just well-made things, written and
-              designed to be useful.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Button href="/books">Browse the catalogue</Button>
-              <Button href="/free-library" variant="ghost">
-                Explore the Free Library →
-              </Button>
+            <p className="mt-7 max-w-xl text-base leading-7 text-paper/75 md:text-lg md:leading-8">Books and audio for the way people really live: ambitious, distracted, curious, and in need of a little more room to think.</p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Button href="/books" className="bg-accent text-paper hover:bg-accent-deep">Explore all books</Button>
+              <Button href="/free-library" variant="outline" className="border-paper/35 bg-transparent text-paper hover:border-paper hover:bg-paper hover:text-ink">Start with a free read</Button>
             </div>
-
-            <dl className="mt-12 grid grid-cols-3 gap-6 max-w-md">
-              {[
-                { k: "Titles", v: "06" },
-                { k: "Avg. length", v: "2h 45m" },
-                { k: "Languages", v: "EN" },
-              ].map((s) => (
-                <div key={s.k}>
-                  <dt className="text-xs uppercase tracking-[0.22em] text-ink-muted">{s.k}</dt>
-                  <dd className="mt-2 font-display text-3xl tabular">{s.v}</dd>
-                </div>
-              ))}
-            </dl>
+            <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4 border-t border-paper/20 pt-6 text-sm text-paper/70">
+              <span><strong className="block text-2xl font-display text-paper">6</strong> current titles</span>
+              <span><strong className="block text-2xl font-display text-paper">3</strong> reading formats</span>
+              <span><strong className="block text-2xl font-display text-paper">10%</strong> off any three books</span>
+            </div>
           </div>
 
-          <div className="lg:col-span-5 relative">
-            <div
-              aria-hidden
-              className="absolute -inset-10 -z-10 bg-[radial-gradient(circle_at_30%_30%,rgba(178,58,47,0.10),transparent_60%)]"
-            />
-            <div className="grid grid-cols-2 gap-6 items-end">
-              <div className="translate-y-6">
-                <BookCover
-                  palette={editorial.cover.palette}
-                  motif={editorial.cover.motif}
-                  spineLabel={editorial.cover.spineLabel}
-                  title={editorial.title}
-                />
-              </div>
-              <div>
-                <BookCover
-                  palette={books[1].cover.palette}
-                  motif={books[1].cover.motif}
-                  spineLabel={books[1].cover.spineLabel}
-                  title={books[1].title}
-                />
-              </div>
-              <div className="-translate-y-2">
-                <BookCover
-                  palette={books[2].cover.palette}
-                  motif={books[2].cover.motif}
-                  spineLabel={books[2].cover.spineLabel}
-                  title={books[2].title}
-                />
-              </div>
-              <div className="translate-y-4">
-                <BookCover
-                  palette={books[4].cover.palette}
-                  motif={books[4].cover.motif}
-                  spineLabel={books[4].cover.spineLabel}
-                  title={books[4].title}
-                />
-              </div>
+          <div className="relative mx-auto w-full max-w-[590px] py-8 lg:py-0" aria-label="Featured Digital Life Press books">
+            <div className="absolute inset-0 -z-10 border border-paper/15" aria-hidden />
+            <div className="absolute -left-5 top-10 h-32 w-32 rounded-full bg-leaf/30 blur-3xl" aria-hidden />
+            <div className="grid grid-cols-2 gap-4 p-5 sm:gap-6 sm:p-8">
+              <div className="translate-y-12"><BookCover {...bookCoverProps(books[0])} className="shadow-[18px_22px_0_rgba(0,0,0,.18)]" /></div>
+              <div><BookCover {...bookCoverProps(books[3])} className="shadow-[18px_22px_0_rgba(0,0,0,.18)]" /></div>
+              <div className="col-span-2 ml-auto w-[48%] -translate-y-1"><BookCover {...bookCoverProps(books[1])} className="shadow-[18px_22px_0_rgba(0,0,0,.18)]" /></div>
             </div>
+            <p className="absolute -bottom-1 left-4 bg-accent px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-paper sm:left-8">The autumn reading list</p>
           </div>
         </Container>
       </section>
 
-      <section aria-labelledby="featured">
-        <Container className="py-16 md:py-24">
-          <div className="flex items-end justify-between gap-6 mb-10">
-            <div>
-              <p className="eyebrow">New & Featured</p>
-              <h2 id="featured" className="mt-4 font-display text-display-lg text-balance">
-                This season&rsquo;s reading.
-              </h2>
-            </div>
-            <Link
-              href="/books"
-              className="hidden sm:inline text-sm text-ink-soft hover:text-ink transition-colors"
-            >
-              See all titles →
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-            {featured.map((book) => (
-              <BookCard key={book.slug} book={book} />
-            ))}
-          </div>
+      <section className="border-b border-muted-line bg-paper-bright">
+        <Container className="grid gap-5 py-6 md:grid-cols-[auto_1fr_auto] md:items-center">
+          <p className="font-display text-xl">A better way to build your shelf.</p>
+          <p className="text-sm leading-6 text-ink-soft md:border-l md:border-muted-line md:pl-6">One purchase unlocks your formats. Keep every title in your personal library and download again whenever you need it.</p>
+          <Link href="/library" className="text-sm font-semibold text-accent hover:text-accent-deep">Visit My Library →</Link>
         </Container>
       </section>
 
-      <section className="bg-paper-deep">
-        <Container className="py-20 md:py-28 grid lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-7">
-            <p className="eyebrow">Editorial Promise</p>
-            <h2 className="mt-4 font-display text-display-lg text-balance">
-              Every title is treated like a small object you will keep on a shelf.
-            </h2>
-            <ul className="mt-8 space-y-5 max-w-xl">
-              {[
-                "Hand-edited by a working editor before publication.",
-                "Designed as EPUB, PDF and audio — never one format squeezed into another.",
-                "Free companion worksheets for every paid book.",
-                "Human narration at a humane pace. No AI voice for narration.",
-              ].map((line) => (
-                <li key={line} className="flex gap-4 text-ink-soft leading-relaxed">
-                  <span aria-hidden className="mt-2 inline-block h-1.5 w-1.5 rounded-full bg-accent" />
-                  <span>{line}</span>
+      <section className="py-16 md:py-24">
+        <Container>
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div><p className="eyebrow">Editor&apos;s selection</p><h2 className="mt-3 font-display text-display-lg">Start somewhere useful.</h2></div>
+            <Link href="/books" className="border-b border-ink pb-1 text-sm font-semibold hover:text-accent hover:border-accent">See the full catalogue</Link>
+          </div>
+          <div className="book-grid mt-10 md:mt-12">{featured.map((book) => <BookCard key={book.slug} book={book} />)}</div>
+        </Container>
+      </section>
+
+      <section className="bg-[#D8E1D1] py-16 md:py-24">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[.75fr_1.25fr] lg:gap-16">
+            <div><p className="eyebrow">Browse the shop</p><h2 className="mt-3 font-display text-display-lg">Read toward the part of life you want to tend.</h2><p className="mt-5 max-w-sm leading-7 text-ink-soft">Practical shelves for attention, home, routines, and the long work of becoming more yourself.</p></div>
+            <ul className="grid gap-x-8 sm:grid-cols-2">
+              {categories.map((category, index) => (
+                <li key={category.slug} className="border-t border-ink/20 py-5 first:sm:border-t-0 sm:nth-[2]:border-t-0">
+                  <Link href={`/categories/${category.slug}`} className="group flex items-baseline justify-between gap-4">
+                    <span className="font-display text-3xl group-hover:text-accent">{category.name}</span>
+                    <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-muted">{String(index + 1).padStart(2, "0")} / {category.books.length}</span>
+                  </Link>
                 </li>
               ))}
             </ul>
-            <div className="mt-10">
-              <Button href="/about" variant="outline">
-                Read our standards
-              </Button>
-            </div>
-          </div>
-          <div className="lg:col-span-5">
-            <figure className="bg-paper-bright border border-muted-line rounded-xl p-8 md:p-10 shadow-editorial">
-              <blockquote className="font-display text-2xl md:text-3xl leading-snug text-balance">
-                &ldquo;A small press doing the slow, careful thing the big houses stopped doing.&rdquo;
-              </blockquote>
-              <figcaption className="mt-6 text-xs uppercase tracking-[0.22em] text-ink-muted">
-                — Editorial review, Vol. 1
-              </figcaption>
-            </figure>
           </div>
         </Container>
       </section>
 
-      <section aria-labelledby="categories">
-        <Container className="py-20 md:py-24">
-          <div className="mb-10">
-            <p className="eyebrow">Browse by topic</p>
-            <h2 id="categories" className="mt-4 font-display text-display-lg text-balance">
-              Choose a corner of the room.
-            </h2>
+      <section className="py-16 md:py-24">
+        <Container className="grid gap-10 lg:grid-cols-[1.2fr_.8fr] lg:gap-16">
+          <div>
+            <p className="eyebrow">Popular with readers</p>
+            <h2 className="mt-3 font-display text-display-lg">The books readers return to.</h2>
+            <div className="book-grid mt-10 md:mt-12">{bestsellers.map((book) => <BookCard key={book.slug} book={book} />)}</div>
           </div>
-
-          <ul className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {["Lifestyle", "Mind", "Productivity", "Home"].map((cat) => (
-              <li key={cat}>
-                <Link
-                  href={`/categories/${cat.toLowerCase()}`}
-                  className="group block rounded-lg border border-muted-line bg-paper-bright p-6 hover:border-ink/40 transition-colors"
-                >
-                  <p className="font-display text-2xl">{cat}</p>
-                  <p className="mt-2 text-sm text-ink-muted group-hover:text-ink transition-colors">
-                    {books.filter((b) => b.category === cat).length} title
-                    {books.filter((b) => b.category === cat).length === 1 ? "" : "s"} →
-                  </p>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <aside className="self-start bg-ink p-7 text-paper md:p-10 lg:mt-12">
+            <p className="eyebrow eyebrow-light">Three-book saving</p>
+            <h2 className="mt-4 font-display text-4xl leading-tight">Build a stack.<br />Save 10%.</h2>
+            <p className="mt-5 text-sm leading-7 text-paper/75">Choose any three books in a single order and your 10% reading-stack saving is applied at checkout.</p>
+            <Button href="/books" variant="outline" className="mt-8 border-paper/35 bg-transparent text-paper hover:border-paper hover:bg-paper hover:text-ink">Choose three books</Button>
+            <p className="mt-9 border-t border-paper/20 pt-5 text-xs leading-5 text-paper/55">Available on eligible digital books. Your final price is always shown before payment.</p>
+          </aside>
         </Container>
       </section>
 
-      <section>
-        <Container className="py-20 md:py-28">
-          <div className="rounded-2xl border border-muted-line bg-ink text-paper p-10 md:p-16 relative overflow-hidden">
-            <div
-              aria-hidden
-              className="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-accent/20 blur-3xl"
-            />
-            <p className="eyebrow text-paper/70">Free Library</p>
-            <h2 className="mt-4 font-display text-display-lg text-balance max-w-2xl">
-              Three complete chapters, one printable worksheet, no email wall.
-            </h2>
-            <p className="mt-6 max-w-xl text-paper/80 leading-relaxed">
-              Free Library is our small gift to anyone browsing. Three opening
-              chapters and a companion worksheet — to read, to print, to keep.
-            </p>
-            <div className="mt-8">
-              <Button href="/free-library" variant="outline" className="border-paper/30 text-paper hover:bg-paper hover:text-ink">
-                Open the Free Library
-              </Button>
-            </div>
-          </div>
+      <section className="border-y border-muted-line bg-paper-bright py-16 md:py-24">
+        <Container className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-20">
+          <div><p className="eyebrow">The free library</p><h2 className="mt-3 font-display text-display-lg">Read before you decide.</h2><p className="mt-5 max-w-xl text-lg leading-8 text-ink-soft">Opening chapters, quiet essays, and one practical worksheet. No payment, no catch, no crowded inbox.</p><Button href="/free-library" className="mt-8">Open the free library</Button></div>
+          <div className="border-l-4 border-accent bg-paper-deep p-7 md:p-10"><p className="font-display text-3xl leading-tight">“A book does not need to be loud to change the shape of a week.”</p><p className="mt-6 text-xs font-semibold uppercase tracking-[0.15em] text-ink-muted">From Letters on Attention</p></div>
+        </Container>
+      </section>
+
+      <section className="bg-accent py-14 text-paper md:py-20">
+        <Container className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
+          <div><p className="eyebrow text-paper/75">A note from the press</p><h2 className="mt-3 max-w-3xl font-display text-[clamp(2.4rem,5vw,4.7rem)] leading-[.98]">New books, useful excerpts, and reader-only offers.</h2></div>
+          <Link href="/free-library" className="inline-flex w-fit border border-paper px-6 py-3 text-sm font-semibold transition-colors hover:bg-paper hover:text-ink">Get the next free read →</Link>
         </Container>
       </section>
     </>
   );
+}
+
+function bookCoverProps(book: (typeof books)[number]) {
+  return { palette: book.cover.palette, motif: book.cover.motif, spineLabel: book.cover.spineLabel, title: book.title };
 }
