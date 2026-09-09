@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BookCard } from "@/components/book-card";
 import { BookCover } from "@/components/book-cover";
+import { BookAssistant } from "@/components/book-assistant";
 import { Container } from "@/components/container";
 import { books, getCategories } from "@/lib/catalog";
 import { getBookPath } from "@/lib/catalog-taxonomy";
@@ -33,7 +34,7 @@ export default function HomePage() {
               <Link className="sidebar-button" href="/full-book">Full Book</Link>
             </section>
             {categories.map((category) => (
-              <section className="sidebar-panel" key={category.title ?? category.slug}>
+              <section className="sidebar-panel" key={category.slug}>
                 <h2 className="sidebar-heading">{category.name}</h2>
                 <Link className="sidebar-link font-semibold" href={`/categories/${category.slug}`}>Open {category.name} shelf →</Link>
                 {category.books.slice(0, 4).map((book) => <Link className="sidebar-link" href={`/books/${book.slug}`} key={book.slug}>{book.title}</Link>)}
@@ -70,7 +71,7 @@ export default function HomePage() {
                   <p className="tabular mt-3 font-bold text-logo-green">From {formatPrice(firstBook.priceCents)}</p>
                   <div className="lead-actions">
                     <Link href={`/books/${firstBook.slug}`} className="primary-action">View book</Link>
-                    <Link href={`/categories/${firstBook.category.toLowerCase()}`} className="secondary-action">Open its shelf</Link>
+                    <Link href={`/categories/${firstPath.category.toLowerCase()}`} className="secondary-action">Open its shelf</Link>
                   </div>
                 </div>
               </article>
@@ -135,6 +136,7 @@ export default function HomePage() {
           </section>
         </Container>
       </div>
+      <BookAssistant />
     </div>
   );
 }
