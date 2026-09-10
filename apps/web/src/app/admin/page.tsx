@@ -20,44 +20,48 @@ const modules = [
 
 export default function AdminPage() {
   return (
-    <main className="admin-page">
+    <main className="min-h-[80vh] bg-[#fffdf7] py-8 text-[#17354a] sm:py-12">
       <Container>
-        <header className="admin-hero">
-          <div>
-            <p className="store-kicker">Administration</p>
-            <h1>Bookhaven control centre.</h1>
-            <p>One calm workspace for the catalogue, customers, commerce, content, translations, marketing, analytics and security.</p>
+        <header className="overflow-hidden rounded-2xl border border-[#dccfae] bg-gradient-to-br from-[#eef2e8] via-[#fffaf0] to-[#f7edd7] p-6 shadow-sm sm:p-9">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="max-w-3xl">
+              <p className="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-[#a97820]">Administration</p>
+              <h1 className="font-serif text-4xl font-medium leading-tight tracking-tight text-[#17354a] sm:text-5xl">Bookhaven control centre.</h1>
+              <p className="mt-4 text-base leading-7 text-[#5d6f78]">One calm workspace for the catalogue, customers, commerce, content, translations, marketing, analytics and security.</p>
+            </div>
+            <nav className="flex flex-wrap gap-2" aria-label="Admin shortcuts">
+              <Link href="/" className="inline-flex min-h-10 items-center rounded-full border border-[#c8b57f] bg-[#fffaf0] px-4 text-sm font-bold text-[#17354a] hover:border-[#b8862f]">View storefront</Link>
+              <Link href="/full-book" className="inline-flex min-h-10 items-center rounded-full bg-[#b8862f] px-4 text-sm font-bold text-white shadow-sm hover:brightness-105">Review catalogue</Link>
+            </nav>
           </div>
-          <nav className="admin-hero-actions" aria-label="Admin shortcuts">
-            <Link href="/" className="secondary-action">View storefront</Link>
-            <Link href="/full-book" className="primary-action">Review catalogue</Link>
-          </nav>
         </header>
 
-        <section className="admin-summary-grid" aria-label="Store overview">
-          <div><strong>{"06"}</strong><span>Current books</span></div>
-          <div><strong>04</strong><span>Buyer categories</span></div>
-          <div><strong>03</strong><span>Book formats</span></div>
-          <div><strong>EN-US</strong><span>Canonical source</span></div>
+        <section className="mt-5 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-[#dccfae] bg-[#dccfae] sm:grid-cols-4" aria-label="Store overview">
+          {[["06", "Current books"], ["04", "Buyer categories"], ["03", "Book formats"], ["EN-US", "Canonical source"]].map(([value, label]) => (
+            <div key={label} className="bg-[#fffaf0] px-4 py-5 text-center">
+              <strong className="block font-serif text-2xl text-[#9b6e19] sm:text-3xl">{value}</strong>
+              <span className="mt-1 block text-xs text-[#6d7c82] sm:text-sm">{label}</span>
+            </div>
+          ))}
         </section>
 
-        <section className="admin-module-grid" aria-label="Administration modules">
+        <section className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4" aria-label="Administration modules">
           {modules.map(([title, description, href], index) => (
-            <Link href={href} key={title} className="admin-module-card">
-              <span className="admin-module-number">{String(index + 1).padStart(2, "0")}</span>
-              <h2>{title}</h2>
-              <p>{description}</p>
-              <span className="admin-open">Open module →</span>
+            <Link href={href} key={title} className="group rounded-xl border border-[#dccfae] bg-[#fffaf0] p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-[#b8862f] hover:shadow-md">
+              <span className="text-xs font-bold tracking-[0.16em] text-[#b8862f]">{String(index + 1).padStart(2, "0")}</span>
+              <h2 className="mt-3 font-serif text-xl font-semibold text-[#17354a]">{title}</h2>
+              <p className="mt-2 text-sm leading-6 text-[#5d6f78]">{description}</p>
+              <span className="mt-4 inline-block text-xs font-bold text-[#8a671f] group-hover:underline">Open module →</span>
             </Link>
           ))}
         </section>
 
-        <section className="admin-workflow">
+        <section className="mt-6 grid gap-5 rounded-2xl border border-[#dccfae] bg-[#f6efdf] p-5 sm:p-7 lg:grid-cols-[1.15fr_.85fr] lg:items-center">
           <div>
-            <p className="store-kicker">Editorial workflow</p>
-            <h2>Plan → Change → Test → Review → Commit → Deploy</h2>
+            <p className="mb-2 text-xs font-bold uppercase tracking-[0.16em] text-[#a97820]">Editorial workflow</p>
+            <h2 className="font-serif text-2xl font-semibold text-[#17354a] sm:text-3xl">Plan → Change → Test → Review → Commit → Deploy</h2>
           </div>
-          <p>AI can prepare drafts, suggestions and analysis. Payment, refunds, entitlement, private asset access and role changes remain deterministic application operations protected by the appropriate staff permissions.</p>
+          <p className="text-sm leading-6 text-[#5d6f78]">AI can prepare drafts, suggestions and analysis. Payment, refunds, entitlement, private asset access and role changes remain deterministic application operations protected by the appropriate staff permissions.</p>
         </section>
       </Container>
     </main>
