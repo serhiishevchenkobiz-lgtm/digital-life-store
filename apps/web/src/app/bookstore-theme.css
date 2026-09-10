@@ -1,0 +1,63 @@
+/* Shared page-level composition for the approved botanical bookstore design. */
+
+.hero-stage {
+  display:grid; grid-template-columns:1.05fr .95fr; min-height:250px; margin:14px; overflow:hidden;
+  border:1px solid var(--line); border-radius:14px;
+  background:linear-gradient(120deg,#f5eedc 0%,#fbf7ed 45%,#e8eee7 100%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.75);
+}
+.hero-copy { display:flex; flex-direction:column; justify-content:center; padding:28px 24px 30px 28px; }
+.hero-copy h1 { max-width:590px; margin:0; font-family:Georgia,"Times New Roman",serif; font-size:clamp(34px,4vw,56px); line-height:.99; font-weight:500; letter-spacing:-.025em; }
+.hero-copy > p:not(.store-kicker) { max-width:520px; margin:12px 0 17px; color:var(--ink-soft); font-family:Georgia,"Times New Roman",serif; font-size:17px; line-height:1.5; }
+.hero-copy .primary-action { width:fit-content; }
+.hero-art { position:relative; min-height:250px; overflow:hidden; background:radial-gradient(circle at 67% 38%,rgba(255,255,255,.95),transparent 20%),linear-gradient(145deg,#d6e0dc 0%,#ebdfc4 55%,#9aa98f 100%); }
+.hero-art::before { content:""; position:absolute; inset:18% 10% 12% 5%; border-radius:42% 58% 50% 40%; background:rgba(255,250,238,.45); filter:blur(3px); }
+.hero-shelf-line { position:absolute; left:8%; right:4%; bottom:19%; height:7px; border-radius:99px; background:#8f6b31; box-shadow:0 7px 0 rgba(73,55,27,.12); }
+.hero-book { position:absolute; bottom:21%; width:78px; height:118px; border-radius:3px; border:1px solid rgba(53,67,48,.4); box-shadow:7px 8px 10px rgba(49,47,29,.16); transform-origin:bottom center; }
+.hero-book-one { left:47%; background:linear-gradient(160deg,#4d6870,#8ea5a4); transform:rotate(-8deg); }
+.hero-book-two { left:58%; bottom:20%; width:87px; height:133px; background:linear-gradient(160deg,#b78035,#e0c790); transform:rotate(4deg); }
+.hero-book-three { left:69%; bottom:21%; width:70px; height:104px; background:linear-gradient(160deg,#65765c,#c6cfad); transform:rotate(10deg); }
+.hero-floral { position:absolute; right:6%; top:10%; color:rgba(122,151,113,.7); font-size:76px; text-shadow:0 4px 0 rgba(255,255,255,.65); }
+
+.featured-book-panel { margin:0 14px; }
+.featured-book-inner { display:grid; grid-template-columns:190px minmax(0,1fr) 135px; gap:20px; align-items:center; min-height:250px; padding:20px 24px; border:1px solid var(--line); border-radius:14px; background:#fffaf0; }
+.featured-book-inner .lead-cover { padding:0; align-self:center; }
+.featured-book-inner .lead-copy { padding:0; }
+.featured-book-inner .lead-copy h2 { margin:0; font-family:Georgia,"Times New Roman",serif; font-size:31px; line-height:1.05; font-weight:600; }
+.featured-book-inner .lead-description { margin:10px 0 0; max-width:650px; color:var(--ink-soft); font-size:14px; line-height:1.6; }
+.featured-ornament { align-self:stretch; display:grid; place-items:center; color:#799477; text-align:center; font-family:Georgia,"Times New Roman",serif; font-size:38px; }
+.featured-ornament span { color:#5e6f77; font-size:17px; line-height:1.25; }
+
+.content-page,.account-page,.checkout-page,.gifts-page,.help-page,.blog-page,.contact-page,.library-page,.wishlist-page,.about-page { min-height:70vh; padding:22px 0 42px; background:transparent; }
+.content-card,.account-card,.checkout-card,.help-card,.blog-card,.library-card { border:1px solid var(--line); border-radius:14px; background:#fffaf0; box-shadow:0 6px 16px rgba(74,56,28,.05); }
+.book-detail,.product-detail,.book-reader { color:var(--ink); }
+.book-detail h1,.product-detail h1,.book-reader h1 { font-family:Georgia,"Times New Roman",serif; }
+.book-detail .panel,.product-detail .panel,.book-reader .panel { border-color:var(--line); border-radius:14px; background:#fffaf0; }
+.breadcrumbs { display:flex; flex-wrap:wrap; gap:7px; align-items:center; margin-bottom:12px; color:var(--ink-soft); font-size:12px; }
+.breadcrumbs a { color:#86641d; font-weight:700; }
+.breadcrumbs a:hover { text-decoration:underline; }
+.breadcrumb-separator { color:#b99a59; }
+label { color:var(--ink); }
+input,select,textarea { accent-color:#a97820; }
+input:not([type="radio"]):not([type="checkbox"]),select,textarea { border-color:var(--line-strong); }
+button { font:inherit; }
+
+@media (max-width:1180px) {
+  .hero-stage { grid-template-columns:1fr; }
+  .hero-art { min-height:190px; }
+  .featured-book-inner { grid-template-columns:150px minmax(0,1fr); }
+  .featured-ornament { display:none; }
+}
+@media (max-width:640px) {
+  .hero-stage { margin:10px; }
+  .hero-copy { padding:22px 18px; }
+  .hero-copy h1 { font-size:34px; }
+  .hero-art { min-height:155px; }
+  .hero-book-one { left:44%; }
+  .hero-book-two { left:58%; }
+  .hero-book-three { left:72%; }
+  .featured-book-panel { margin-inline:10px; }
+  .featured-book-inner { grid-template-columns:1fr; gap:10px; padding:18px; }
+  .featured-book-inner .lead-cover { max-width:170px; margin-inline:auto; }
+  .featured-book-inner .lead-copy h2 { font-size:27px; }
+}
