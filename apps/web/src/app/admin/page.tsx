@@ -3,48 +3,61 @@ import Link from "next/link";
 import { Container } from "@/components/container";
 
 export const metadata: Metadata = {
-  title: "Admin Dashboard",
-  description: "Central management area for the digital bookstore.",
+  title: "Admin Dashboard | Bookhaven",
+  description: "Central management area for the digital bookstore catalogue, commerce, content, translations, marketing and security.",
 };
 
 const modules = [
-  ["Catalog", "Books, authors, categories, sections, topics and collections."],
-  ["Orders & customers", "Orders, payments, purchases, entitlements and download activity."],
-  ["Gifts & promotions", "Gift products, coupons, campaigns and bundles."],
-  ["Content studio", "Landing pages, blog, editorial content and media."],
-  ["Translations", "Locale content, translation status and EN-US source content."],
-  ["SEO & social", "Metadata, structured content, social drafts and publishing review."],
-  ["Email & analytics", "Reader communications, campaigns and site performance."],
-  ["Access & security", "Roles, permissions, audit log and security controls."],
+  ["Catalog", "Books, authors, categories, sections, topics and collections.", "/full-book"],
+  ["Orders & customers", "Orders, payments, purchases, entitlements and download activity.", "/account"],
+  ["Gifts & promotions", "Gift products, coupons, campaigns and bundles.", "/gifts"],
+  ["Content studio", "Landing pages, blog, editorial content and media.", "/blog"],
+  ["Translations", "Locale content, translation status and EN-US source content.", "/"],
+  ["SEO & social", "Metadata, structured content, social drafts and publishing review.", "/"],
+  ["Email & analytics", "Reader communications, campaigns and site performance.", "/"],
+  ["Access & security", "Roles, permissions, audit log and security controls.", "/account"],
 ] as const;
 
 export default function AdminPage() {
   return (
-    <main className="min-h-[70vh] bg-slate-50 py-8 text-blue-deep">
+    <main className="admin-page">
       <Container>
-        <header className="rounded-2xl border border-sky-200 bg-white p-6 shadow-sm sm:p-8">
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-sky-700">Administration</p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">Store control centre</h1>
-          <p className="mt-3 max-w-3xl text-sm leading-6 text-slate">One place to manage the catalogue, customers, commerce, content, translations, marketing, analytics and security. This first screen is the navigation foundation; production access will be protected by staff roles before deployment.</p>
-          <div className="mt-5 flex flex-wrap gap-2">
-            <Link href="/books" className="rounded-lg border border-sky-200 px-3 py-2 text-sm font-semibold hover:bg-sky-50">View storefront</Link>
-            <Link href="/full-book" className="rounded-lg border border-sky-200 px-3 py-2 text-sm font-semibold hover:bg-sky-50">Review catalogue structure</Link>
+        <header className="admin-hero">
+          <div>
+            <p className="store-kicker">Administration</p>
+            <h1>Bookhaven control centre.</h1>
+            <p>One calm workspace for the catalogue, customers, commerce, content, translations, marketing, analytics and security.</p>
           </div>
+          <nav className="admin-hero-actions" aria-label="Admin shortcuts">
+            <Link href="/" className="secondary-action">View storefront</Link>
+            <Link href="/full-book" className="primary-action">Review catalogue</Link>
+          </nav>
         </header>
 
-        <section className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Administration modules">
-          {modules.map(([title, description]) => (
-            <article key={title} className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-sky-300">
-              <h2 className="text-lg font-semibold">{title}</h2>
-              <p className="mt-2 text-sm leading-5 text-slate">{description}</p>
-              <button type="button" className="mt-4 text-xs font-bold text-sky-700">Open module →</button>
-            </article>
+        <section className="admin-summary-grid" aria-label="Store overview">
+          <div><strong>{"06"}</strong><span>Current books</span></div>
+          <div><strong>04</strong><span>Buyer categories</span></div>
+          <div><strong>03</strong><span>Book formats</span></div>
+          <div><strong>EN-US</strong><span>Canonical source</span></div>
+        </section>
+
+        <section className="admin-module-grid" aria-label="Administration modules">
+          {modules.map(([title, description, href], index) => (
+            <Link href={href} key={title} className="admin-module-card">
+              <span className="admin-module-number">{String(index + 1).padStart(2, "0")}</span>
+              <h2>{title}</h2>
+              <p>{description}</p>
+              <span className="admin-open">Open module →</span>
+            </Link>
           ))}
         </section>
 
-        <section className="mt-6 rounded-xl border border-amber-200 bg-amber-50 p-5">
-          <h2 className="font-semibold">Security boundary</h2>
-          <p className="mt-1 text-sm leading-5 text-slate">AI may prepare drafts, recommendations and analysis. Payment, refunds, entitlement, private asset access and role changes remain deterministic application operations and require the appropriate staff permissions.</p>
+        <section className="admin-workflow">
+          <div>
+            <p className="store-kicker">Editorial workflow</p>
+            <h2>Plan → Change → Test → Review → Commit → Deploy</h2>
+          </div>
+          <p>AI can prepare drafts, suggestions and analysis. Payment, refunds, entitlement, private asset access and role changes remain deterministic application operations protected by the appropriate staff permissions.</p>
         </section>
       </Container>
     </main>
