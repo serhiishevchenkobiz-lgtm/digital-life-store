@@ -15,7 +15,10 @@ export function BookAssistant() {
   const [activeBook, setActiveBook] = useState(books[0]);
   const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const recommendations = useMemo(() => books.filter((book) => book.slug !== activeBook.slug && book.category === activeBook.category).slice(0, 2), [activeBook]);
+  const recommendations = useMemo(
+    () => books.filter((book) => book.slug !== activeBook.slug && book.category === activeBook.category).slice(0, 2),
+    [activeBook],
+  );
 
   useEffect(() => {
     const showTimer = setTimeout(() => setOpen(true), 9000);
@@ -51,7 +54,6 @@ export function BookAssistant() {
             </div>
             <button type="button" className="book-assistant-close" onClick={() => setOpen(false)} aria-label="Minimize assistant">−</button>
           </div>
-
           <div className="book-assistant-body">
             <p className="book-assistant-copy">Ask about a topic, format, language or another book that may fit your reading.</p>
             <div className="book-assistant-locales" aria-label="Assistant language">
@@ -79,7 +81,7 @@ export function BookAssistant() {
         </aside>
       )}
       <button type="button" className={`book-assistant-trigger${open ? " is-open" : ""}`} onClick={() => setOpen((value) => !value)} aria-expanded={open} aria-label="Open book assistant">
-        <span className="book-assistant-avatar" aria-hidden="true">◌</span>
+        <span className="book-assistant-avatar" aria-hidden="true">👩</span>
         <span>How can I help?</span>
       </button>
     </div>
