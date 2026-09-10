@@ -5,7 +5,6 @@ import { SiteFooter } from "@/components/site-footer";
 import { CartProvider } from "@/components/cart-provider";
 import "./globals.css";
 import "./bookstore-theme.css";
-import "./bookstore-theme-final.css";
 
 const fraunces = Fraunces({ subsets: ["latin"], display: "swap", variable: "--font-display", axes: ["opsz", "SOFT"] });
 const inter = Inter({ subsets: ["latin"], display: "swap", variable: "--font-sans" });
