@@ -1,120 +1,133 @@
 import Link from "next/link";
-import { BookCard } from "@/components/book-card";
 import { BookCover } from "@/components/book-cover";
-import { Button } from "@/components/button";
+import { BookAssistant } from "@/components/book-assistant";
 import { Container } from "@/components/container";
 import { books, getCategories } from "@/lib/catalog";
+import { getBookPath } from "@/lib/catalog-taxonomy";
+import { formatPrice } from "@/lib/utils";
 
-const featured = books.slice(0, 4);
-const bestsellers = [books[0], books[3], books[1], books[4]];
+const categories = getCategories();
+const newest = [...books].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
+const firstBook = books[0];
+const firstPath = getBookPath(firstBook);
+
+const categoryDescriptions: Record<string, string> = {
+  Lifestyle: "Everyday life, routines and small rituals.",
+  Mind: "Focus, awareness and clearer thinking.",
+  Productivity: "Planning, habits and sustainable systems.",
+  Home: "Living spaces, comfort and the way we live.",
+};
+
+const categoryArt: Record<string, string> = {
+  Lifestyle: "/art/category-lifestyle.svg",
+  Mind: "/art/category-mind.svg",
+  Productivity: "/art/category-productivity.svg",
+  Home: "/art/category-home.svg",
+};
 
 export default function HomePage() {
-  const categories = getCategories();
-
   return (
-    <>
-      <section className="bg-night text-paper">
-        <Container className="grid min-h-[620px] items-center gap-12 py-14 md:min-h-[650px] md:py-20 lg:grid-cols-[1.05fr_.95fr] lg:gap-16 xl:min-h-[700px]">
-          <div className="relative z-10 max-w-2xl">
-            <p className="eyebrow eyebrow-light">Digital books, thoughtfully published</p>
-            <h1 className="mt-6 font-display text-[clamp(3.4rem,7vw,7rem)] leading-[0.91] tracking-[-0.045em]">
-              Find your next<br /><em className="font-normal text-[#D8E1D1]">good idea.</em>
-            </h1>
-            <p className="mt-7 max-w-xl text-base leading-7 text-paper/75 md:text-lg md:leading-8">Books and audio for the way people really live: ambitious, distracted, curious, and in need of a little more room to think.</p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Button href="/books" className="bg-accent text-paper hover:bg-accent-deep">Explore all books</Button>
-              <Button href="/free-library" variant="outline" className="border-paper/35 bg-transparent text-paper hover:border-paper hover:bg-paper hover:text-ink">Start with a free read</Button>
-            </div>
-            <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4 border-t border-paper/20 pt-6 text-sm text-paper/70">
-              <span><strong className="block text-2xl font-display text-paper">6</strong> current titles</span>
-              <span><strong className="block text-2xl font-display text-paper">3</strong> reading formats</span>
-              <span><strong className="block text-2xl font-display text-paper">10%</strong> off any three books</span>
-            </div>
-          </div>
+    <div className="store-home botanical-storefront">
+      <div className="store-frame" aria-hidden="true">
+        <span className="ornament ornament-tl">❀ 〰</span>
+        <span className="ornament ornament-tr">❀ 〰</span>
+        <span className="ornament ornament-bl">❀ 〰</span>
+        <span className="ornament ornament-br">❀ 〰</span>
+      </div>
 
-          <div className="relative mx-auto w-full max-w-[590px] py-8 lg:py-0" aria-label="Featured Digital Life Press books">
-            <div className="absolute inset-0 -z-10 border border-paper/15" aria-hidden />
-            <div className="absolute -left-5 top-10 h-32 w-32 rounded-full bg-leaf/30 blur-3xl" aria-hidden />
-            <div className="grid grid-cols-2 gap-4 p-5 sm:gap-6 sm:p-8">
-              <div className="translate-y-12"><BookCover {...bookCoverProps(books[0])} className="shadow-[18px_22px_0_rgba(0,0,0,.18)]" /></div>
-              <div><BookCover {...bookCoverProps(books[3])} className="shadow-[18px_22px_0_rgba(0,0,0,.18)]" /></div>
-              <div className="col-span-2 ml-auto w-[48%] -translate-y-1"><BookCover {...bookCoverProps(books[1])} className="shadow-[18px_22px_0_rgba(0,0,0,.18)]" /></div>
-            </div>
-            <p className="absolute -bottom-1 left-4 bg-accent px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.16em] text-paper sm:left-8">The autumn reading list</p>
-          </div>
-        </Container>
-      </section>
-
-      <section className="border-b border-muted-line bg-paper-bright">
-        <Container className="grid gap-5 py-6 md:grid-cols-[auto_1fr_auto] md:items-center">
-          <p className="font-display text-xl">A better way to build your shelf.</p>
-          <p className="text-sm leading-6 text-ink-soft md:border-l md:border-muted-line md:pl-6">One purchase unlocks your formats. Keep every title in your personal library and download again whenever you need it.</p>
-          <Link href="/library" className="text-sm font-semibold text-accent hover:text-accent-deep">Visit My Library →</Link>
-        </Container>
-      </section>
-
-      <section className="py-16 md:py-24">
-        <Container>
-          <div className="flex flex-wrap items-end justify-between gap-6">
-            <div><p className="eyebrow">Editor&apos;s selection</p><h2 className="mt-3 font-display text-display-lg">Start somewhere useful.</h2></div>
-            <Link href="/books" className="border-b border-ink pb-1 text-sm font-semibold hover:text-accent hover:border-accent">See the full catalogue</Link>
-          </div>
-          <div className="book-grid mt-10 md:mt-12">{featured.map((book) => <BookCard key={book.slug} book={book} />)}</div>
-        </Container>
-      </section>
-
-      <section className="bg-[#D8E1D1] py-16 md:py-24">
-        <Container>
-          <div className="grid gap-10 lg:grid-cols-[.75fr_1.25fr] lg:gap-16">
-            <div><p className="eyebrow">Browse the shop</p><h2 className="mt-3 font-display text-display-lg">Read toward the part of life you want to tend.</h2><p className="mt-5 max-w-sm leading-7 text-ink-soft">Practical shelves for attention, home, routines, and the long work of becoming more yourself.</p></div>
-            <ul className="grid gap-x-8 sm:grid-cols-2">
-              {categories.map((category, index) => (
-                <li key={category.slug} className="border-t border-ink/20 py-5 first:sm:border-t-0 sm:nth-[2]:border-t-0">
-                  <Link href={`/categories/${category.slug}`} className="group flex items-baseline justify-between gap-4">
-                    <span className="font-display text-3xl group-hover:text-accent">{category.name}</span>
-                    <span className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-muted">{String(index + 1).padStart(2, "0")} / {category.books.length}</span>
-                  </Link>
-                </li>
+      <Container className="storefront-container">
+        <div className="storefront-grid">
+          <aside className="storefront-left-rail" aria-label="Bookstore navigation">
+            <section className="left-rail-panel left-rail-welcome">
+              <p className="rail-kicker">Explore the shop</p>
+              <h2>Find your next favorite book.</h2>
+              <p>Choose a category, follow its section and open the shelf that fits what you want to read.</p>
+              <Link href="/full-book" className="rail-primary">Open Full Book →</Link>
+            </section>
+            <section className="left-rail-panel">
+              <h2 className="rail-heading">Browse</h2>
+              {[["Home", "/"], ["All Books", "/books"], ["Categories", "/categories"], ["Full Book", "/full-book"], ["Bestsellers", "/books?q=bestseller"], ["New Titles", "/books?q=new"], ["Free Library", "/free-library"], ["My Library", "/library"], ["Wishlist", "/wishlist"]].map(([label, href]) => (
+                <Link key={href} href={href} className={`rail-link${href === "/" ? " is-active" : ""}`}><span className="rail-link-icon" aria-hidden="true">{href === "/" ? "⌂" : href === "/full-book" ? "▤" : href === "/wishlist" ? "♡" : "○"}</span>{label}</Link>
               ))}
-            </ul>
-          </div>
-        </Container>
-      </section>
-
-      <section className="py-16 md:py-24">
-        <Container className="grid gap-10 lg:grid-cols-[1.2fr_.8fr] lg:gap-16">
-          <div>
-            <p className="eyebrow">Popular with readers</p>
-            <h2 className="mt-3 font-display text-display-lg">The books readers return to.</h2>
-            <div className="book-grid mt-10 md:mt-12">{bestsellers.map((book) => <BookCard key={book.slug} book={book} />)}</div>
-          </div>
-          <aside className="self-start bg-ink p-7 text-paper md:p-10 lg:mt-12">
-            <p className="eyebrow eyebrow-light">Three-book saving</p>
-            <h2 className="mt-4 font-display text-4xl leading-tight">Build a stack.<br />Save 10%.</h2>
-            <p className="mt-5 text-sm leading-7 text-paper/75">Choose any three books in a single order and your 10% reading-stack saving is applied at checkout.</p>
-            <Button href="/books" variant="outline" className="mt-8 border-paper/35 bg-transparent text-paper hover:border-paper hover:bg-paper hover:text-ink">Choose three books</Button>
-            <p className="mt-9 border-t border-paper/20 pt-5 text-xs leading-5 text-paper/55">Available on eligible digital books. Your final price is always shown before payment.</p>
+            </section>
+            <section className="left-rail-panel">
+              <h2 className="rail-heading">Categories</h2>
+              {categories.map((category) => (
+                <Link href={`/categories/${category.slug}`} key={category.slug} className="rail-category-link"><span><span className="rail-link-icon" aria-hidden="true">✦</span>{category.name}</span><small>{category.books.length}</small></Link>
+              ))}
+            </section>
+            <section className="left-rail-panel rail-information">
+              <h2 className="rail-heading">Information</h2>
+              {[["Gift Certificates", "/gifts"], ["DRM-Free Books", "/books?q=drm-free"], ["Feedback", "/feedback"], ["Blog", "/blog"], ["How it works", "/about"], ["Contact", "/contact"]].map(([label, href]) => <Link href={href} className="rail-link" key={href}><span className="rail-link-icon" aria-hidden="true">◦</span>{label}</Link>)}
+            </section>
           </aside>
-        </Container>
-      </section>
 
-      <section className="border-y border-muted-line bg-paper-bright py-16 md:py-24">
-        <Container className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-20">
-          <div><p className="eyebrow">The free library</p><h2 className="mt-3 font-display text-display-lg">Read before you decide.</h2><p className="mt-5 max-w-xl text-lg leading-8 text-ink-soft">Opening chapters, quiet essays, and one practical worksheet. No payment, no catch, no crowded inbox.</p><Button href="/free-library" className="mt-8">Open the free library</Button></div>
-          <div className="border-l-4 border-accent bg-paper-deep p-7 md:p-10"><p className="font-display text-3xl leading-tight">“A book does not need to be loud to change the shape of a week.”</p><p className="mt-6 text-xs font-semibold uppercase tracking-[0.15em] text-ink-muted">From Letters on Attention</p></div>
-        </Container>
-      </section>
+          <main className="storefront-main">
+            <section className="home-hero" aria-label="Bookstore introduction">
+              <div className="home-hero-copy">
+                <p className="store-kicker">Your digital library</p>
+                <h1>Books for a more beautiful everyday.</h1>
+                <p className="home-hero-subtitle">Thoughtful books, calming audio and practical tools for a better life.</p>
+                <Link href="/categories" className="hero-button">Explore our collection →</Link>
+              </div>
+              <div className="home-hero-art"><img src="/art/home-hero-botanical.svg" alt="Botanical reading scene with books, flowers, water and mountains" /></div>
+            </section>
 
-      <section className="bg-accent py-14 text-paper md:py-20">
-        <Container className="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-end">
-          <div><p className="eyebrow text-paper/75">A note from the press</p><h2 className="mt-3 max-w-3xl font-display text-[clamp(2.4rem,5vw,4.7rem)] leading-[.98]">New books, useful excerpts, and reader-only offers.</h2></div>
-          <Link href="/free-library" className="inline-flex w-fit border border-paper px-6 py-3 text-sm font-semibold transition-colors hover:bg-paper hover:text-ink">Get the next free read →</Link>
-        </Container>
-      </section>
-    </>
+            <section className="home-section featured-section" aria-labelledby="featured-book-title">
+              <div className="home-section-heading"><div className="section-rule"><span>Featured Book</span></div><Link href={`/categories/${firstPath.category.toLowerCase()}`}>View shelf →</Link></div>
+              <div className="featured-book-card">
+                <div className="featured-cover-wrap"><BookCover palette={firstBook.cover.palette} motif={firstBook.cover.motif} spineLabel={firstBook.cover.spineLabel} title={firstBook.title} className="featured-cover" /></div>
+                <div className="featured-book-copy">
+                  <span className="book-pill">{firstPath.category}</span>
+                  <h2 id="featured-book-title">{firstBook.title}</h2>
+                  <p className="book-subtitle">{firstBook.subtitle}</p>
+                  <p className="book-path">{firstPath.category}<span>•</span>{firstPath.section}<span>•</span>{firstPath.topic}</p>
+                  <p className="book-description">{firstBook.shortDescription}</p>
+                  <p className="book-price">From {formatPrice(firstBook.priceCents)}</p>
+                  <div className="book-actions"><Link href={`/books/${firstBook.slug}`} className="hero-button">View book →</Link><Link href={`/categories/${firstPath.category.toLowerCase()}`} className="outline-button">Open its shelf →</Link></div>
+                </div>
+                <div className="featured-note" aria-hidden="true"><span>✿</span><em>Small books.<br />Big changes.</em></div>
+              </div>
+            </section>
+
+            <section className="home-section" id="categories" aria-labelledby="category-title">
+              <div className="home-section-heading"><div className="section-rule"><span id="category-title">Shop by Category</span></div><Link href="/categories">See all categories →</Link></div>
+              <div className="category-card-grid">
+                {categories.map((category) => (
+                  <Link href={`/categories/${category.slug}`} className="category-card" key={category.slug}>
+                    <div className="category-image"><img src={categoryArt[category.name] ?? "/art/category-lifestyle.svg"} alt="" /></div>
+                    <div className="category-card-body"><strong>{category.name}</strong><p>{categoryDescriptions[category.name] ?? "Books collected around a clear subject."}</p><span>Open shelf →</span></div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+
+            <section className="home-section" id="new" aria-labelledby="new-title">
+              <div className="home-section-heading"><div className="section-rule"><span id="new-title">Just Arrived</span></div><Link href="/books?q=new">More books →</Link></div>
+              <div className="mini-shelf-grid">
+                {newest.slice(0, 5).map((book) => (
+                  <Link href={`/books/${book.slug}`} className="mini-book-card" key={book.slug}>
+                    <div className="mini-book-cover"><BookCover palette={book.cover.palette} motif={book.cover.motif} spineLabel={book.cover.spineLabel} title={book.title} /></div>
+                    <div className="mini-book-copy"><span>{book.category}</span><strong>{book.title}</strong><small>{formatPrice(book.priceCents)}</small></div>
+                  </Link>
+                ))}
+              </div>
+            </section>
+
+            <section className="full-book-callout"><div><p className="store-kicker">Full Book</p><h2>The complete catalogue, arranged by category, section and topic.</h2><p>Every title has one clear home. Editorial selections can appear on the front page without losing their canonical shelf.</p></div><Link href="/full-book" className="outline-button">Open Full Book →</Link></section>
+          </main>
+
+          <aside className="storefront-right-rail" aria-label="Bookstore information and media">
+            <section className="right-rail-panel"><div className="right-panel-title">Discover More</div><p className="right-panel-intro">Helpful tools, useful links and inspiration for everyday reading.</p>
+              {[["✦", "Free resources", "Free books, guides and tips"], ["❧", "Reading recommendations", "Curated by our editorial team"], ["◉", "Audio & video", "Listen, watch and be inspired"], ["✿", "Learning & growth", "Small steps, practical ideas"]].map(([icon, title, text]) => <Link href="/help" className="right-service" key={title}><span className="right-service-icon" aria-hidden="true">{icon}</span><span><strong>{title}</strong><small>{text}</small></span></Link>)}
+            </section>
+            <section className="right-rail-panel media-panel"><div className="right-panel-title">Featured Media</div><p className="right-panel-intro">Books come to life with audio and video.</p><div className="media-scene"><img src="/art/home-hero-botanical.svg" alt="" /><span>▶</span><small>0:00 / 1:42</small></div><div className="media-features"><span>◉ HD Video & Audio</span><span>▣ Multiple formats</span><span>▤ Works on all devices</span></div></section>
+            <section className="right-rail-panel"><div className="right-panel-title">Quick Links</div>{[["FAQ", "/help"], ["Shopping & Delivery", "/help"], ["Returns & Refunds", "/help"], ["Privacy Policy", "/privacy"], ["Terms of Service", "/terms"]].map(([label, href]) => <Link className="quick-link" href={href} key={label}>◦ {label}</Link>)}</section>
+            <section className="right-rail-panel help-panel"><div className="right-panel-title">Need Help?</div><p>Our English knowledge base is here for you.</p><Link href="/help" className="info-link">Search the knowledge base →</Link></section>
+          </aside>
+        </div>
+      </Container>
+      <BookAssistant />
+    </div>
   );
-}
-
-function bookCoverProps(book: (typeof books)[number]) {
-  return { palette: book.cover.palette, motif: book.cover.motif, spineLabel: book.cover.spineLabel, title: book.title };
 }
